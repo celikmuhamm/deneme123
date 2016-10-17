@@ -8,6 +8,11 @@ h1 {
     font-size: 200%;
 }
 
+h3 {
+    color: #23314D;
+    font-size: 150%;
+}
+
 .navbar-inverse{
 	background: #020815;
 	font-size: 115%;
@@ -19,6 +24,10 @@ div.navbar-header{
 
 div.greeting {
     font-style: italic;
+}
+
+div.Group-Events{
+	font-size: 125%;
 }
 
 footer {
