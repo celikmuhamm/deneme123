@@ -32,3 +32,6 @@ def sign_up():
 def map_page():
     return render_template('map.html')
 
+@site.route('/timeline')
+def timeline_page():
+    return render_template('index.html')
