@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-  </head>
-  <body>
-    <h1>First Commit -- Nihat Mert Çiçek!</h1>
-	  
-	  HalilİbrOnuşOnuşOnuş
-	  
-	  
-
-	
-<h1>First Commit -- Muhammed Safa Çelik</h1>
-<h1>First Commit -- Emine Öykü Bozkır</h1>
-    <footer>
-      <div id="datetime">{{ current_time }}</div>
-    </footer>
-  </body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+      <div class="page-header">
+        <h1>Welcome to the history based social map network!</h1>
+      </div>
+      <div class="greeting">Have a nice {{ day_name }}.</div>
+{% endblock %}

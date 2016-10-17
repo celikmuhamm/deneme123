@@ -1,21 +1,33 @@
 body {
-  background-color: white;
-  color: #6F6F6F;
-  font-family: 'Droid Sans', 'Helvetica', 'sans';
-  font-size: 12pt;
-  margin: 2ex 2em;
+    padding-top: 0px;
+    font-family: 'Fontin-Sans', serif;
 }
 
-h1, h2, h3, h4 {
-  color: #E9601A;
+h1 {
+    color: #23314D;
+    font-size: 200%;
 }
 
-a {
-  color: #6F6F6F;
-  text-decoration: underline;
+.navbar-inverse{
+	background: #020815;
+	font-size: 115%;
 }
 
-div#datetime {
-  font-size: 80%;
-  text-align: right;
+div.navbar-header{
+	font-family: 'Lato';
 }
+
+div.greeting {
+    font-style: italic;
+}
+
+footer {
+    text-align: center;
+    font-size: 80%;
+}
+
+#map {
+        height: 670px;
+        width: 100%;
+        margin: 0 auto 0 auto;
+    }
