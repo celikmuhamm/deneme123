@@ -30,4 +30,7 @@ def documents_page():
 def sign_up():
     return render_template('signUp.html')
 
+@site.route('/maps')
+def map_page():
+    return render_template('map.html')
 
