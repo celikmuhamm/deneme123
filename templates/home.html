@@ -1,11 +1,13 @@
 {% extends "layout.html" %}
 {% block title %}Home{% endblock %}
-{% block navbarsignup}
+{% block navbarsignup %}
 <form class="navbar-form navbar-right">
-	<a href="#" class="btn btn-default" role="button">Sign up</a> <a
-		href="/sign_in" class="btn btn-info" role="button">Sign in</a>
+	<a href={{ url_for('site.sign_up')}} class="btn btn-default"
+		role="button">Sign up</a> <a href="/sign_in" class="btn btn-info"
+		role="button">Sign in</a>
 </form>
 {% endblock %}
+
 {% block content %}
 <div class="page-header">
 	<h1>Welcome to the history based social map network!</h1>
