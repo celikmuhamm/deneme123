@@ -31,5 +31,11 @@ def sign_up():
 @site.route('/maps')
 def map_page():
     return render_template('map.html')
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/itucsdb1624/itucsdb1624.git
 
+@site.route('/timeline')
+def timeline_page():
+    return render_template('index.html')
