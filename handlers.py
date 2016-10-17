@@ -26,4 +26,8 @@ def documents_page():
     events = current_app.store.get_events()
     return render_template('documents.html', events=sorted(events.items()))
 
+@site.route('/signUp')
+def sign_up():
+    return render_template('signUp.html')
+
 
