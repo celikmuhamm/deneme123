@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}Event List{% endblock %}
+{% block content %}
+      <div class="page-header">
+        <h1>Events</h1>
+      </div>
+      <div class="Group-Events">
+	    <div class="list-group">
+	        <a href="#" class="list-group-item">
+	            <span class="glyphicon glyphicon-camera"></span> Pictures <span class="badge">25</span>
+	        </a>
+	        <a href="/events/documents" class="list-group-item active">
+	            <span class="glyphicon glyphicon-file"></span> Documents <span class="badge">{{ tot_num }}</span>
+	        </a>
+	        <a href="#" class="list-group-item">
+	            <span class="glyphicon glyphicon-music"></span> Music <span class="badge">50</span>
+	        </a>
+	        <a href="#" class="list-group-item">
+	            <span class="glyphicon glyphicon-film"></span> Videos <span class="badge">8</span>
+	        </a>
+	  	  </div>
+	   </div>
+	   
+	   
+{% endblock %}
