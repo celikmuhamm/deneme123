@@ -16,10 +16,8 @@ def home_page():
 
 @site.route('/events')
 def events_page():
-    events = current_app.store.get_events()
-    now = datetime.now()
-    day = now.strftime('%A')
-    return render_template('events.html', events=sorted(events.items()),day_name=day )
+    total_number = current_app.store.last_event_id
+    return render_template('events.html',tot_num =total_number )
 
 @site.route('/events/documents')
 def documents_page():
@@ -29,5 +27,9 @@ def documents_page():
 @site.route('/signUp')
 def sign_up():
     return render_template('signUp.html')
+
+@site.route('/maps')
+def map_page():
+    return render_template('map.html')
 
 
