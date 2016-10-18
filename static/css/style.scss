@@ -104,7 +104,7 @@ $red: #e74c3c;
      &:hover {
        transform: scale(1.2);
      }
-     time {
+     date {
        font-family: roboto;
        font-size: 1.1rem;
        display: block;
@@ -132,7 +132,7 @@ $red: #e74c3c;
    background-color: #fff;
    padding: 20px;
   margin: auto;
-   time {
+   date {
      display: block;
      text-align: right;
  }
@@ -165,7 +165,7 @@ $red: #e74c3c;
      padding: 20px;
      margin: auto;
      box-shadow: 0 0 30px rgba(0,0,0,0.4);
-     time {
+     date {
        display: block;
        text-align: right;
      }
