@@ -23,7 +23,7 @@ def create_app():
 def get_sqldb_dsn(vcap_services):
     """Returns the data source name for IBM SQL DB."""
     parsed = json.loads(vcap_services)
-    credentials = parsed["sqldb"][0]["credentials"]
+    credentials = parsed["elephantsql"][0]["credentials"]
     user = credentials["username"]
     password = credentials["password"]
     host = credentials["hostname"]
