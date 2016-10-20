@@ -1,6 +1,6 @@
 applications:
 - services:
-  - ElephantSQL-x4
+  - ElephantSQL-2o
 - disk_quota: 1024M
   host: itucsdb1624
   name: itucsdb1624
