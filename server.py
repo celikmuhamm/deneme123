@@ -23,13 +23,10 @@ def create_app():
 def get_sqldb_dsn(vcap_services):
     """Returns the data source name for IBM SQL DB."""
     parsed = json.loads(vcap_services)
-    credentials = parsed["elephantsql"][0]["credentials"]
-    user = credentials["username"]
-    password = credentials["password"]
-    host = credentials["hostname"]
-    port = credentials["port"]
-    dbname = credentials["db"]
-    dsn = """DATABASE={};HOSTNAME={};PORT={};UID={};PWD={};""".format(dbname, host, port, user, password)
+    uri = parsed["elephantsql"][0]["credentials"]["uri"]
+    match = re.match('postgres://(.*?):(.*?)@(.*?)(:(\d+))?/(.*)',uri)
+    user,password,host, _,port,dbname = match.groups()
+    dsn = """user='{}' password='{}' host='{}' port={} dbname='{}'""".format(user, password, host, port, dbname)
     return dsn
 
 @app.route('/initdb')
