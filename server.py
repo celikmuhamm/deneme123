@@ -9,6 +9,7 @@ from handlers import site
 from flask import redirect
 from event import Event
 from store import Store
+import psycopg2 as dbapi2
 
 app = Flask(__name__)
 
@@ -31,38 +32,32 @@ def get_sqldb_dsn(vcap_services):
 
 @app.route('/initdb')
 def initialize_database():
-    try:
-        connection = ibm_db.connect(app.config['dsn'], '', '')
-        query = """DROP TABLE COUNTER"""
-        ibm_db.exec_immediate(connection, query)
-    except:
-        pass
+    with dbapi2.connect(app.config['dsn']) as connection:
+        cursor = connection.cursor()
+       
+        query = """DROP TABLE IF EXISTS COUNTER"""
+        cursor.execute(query)
 
-    try:
-        connection = ibm_db.connect(app.config['dsn'], '', '')
         query = """CREATE TABLE COUNTER (N INTEGER)"""
-        ibm_db.exec_immediate(connection, query)
+        cursor.execute(query)
 
         query = """INSERT INTO COUNTER (N) VALUES (0)"""
-        ibm_db.exec_immediate(connection, query)
-    except:
-        pass
+        cursor.execute(query)
     return redirect(url_for('site.home_page'))
 
 
 @app.route('/count')
 def counter_page():
-    try:
-        connection = ibm_db.connect(app.config['dsn'], '', '')
-
+    with dbapi2.connect(app.config['dsn']) as connection:
+        cursor = connection.cursor()
+       
         query = "UPDATE COUNTER SET N = N + 1"
-        ibm_db.exec_immediate(connection, query)
-
+        cursor.execute(query)
+        connection.commit()
+        
         query = "SELECT N FROM COUNTER"
-        statement = ibm_db.exec_immediate(connection, query)
-        (count,) = ibm_db.fetch_tuple(statement)
-    except:
-        count = -1
+        cursor.execute(query)
+        count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
 
 
@@ -79,7 +74,9 @@ def main():
     if VCAP_SERVICES is not None:
         app.config['dsn'] = get_sqldb_dsn(VCAP_SERVICES)
     else:
-        app.config['dsn'] = """DATABASE=itucsdb;HOSTNAME=localhost;PORT=5000;UID=vagrant;PWD=vagrant;"""
+       app.config['dsn'] = """user='vagrant' password='vagrant'
+                               host='localhost' port=5432 dbname='itucsdb'"""
+                               
     app.run(host='0.0.0.0', port=port, debug=debug)
 
 if __name__ == '__main__':
