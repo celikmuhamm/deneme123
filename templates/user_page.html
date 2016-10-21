@@ -6,7 +6,7 @@
 	<li class="dropdown"><a href="#" class="dropdown-toggle"
 		data-toggle="dropdown" role="button" aria-haspopup="true"
 		aria-expanded="false"><span class="glyphicon glyphicon-user"></span>
-			Username </a>
+			{{ user_name }}</a>
 		<ul class="dropdown-menu">
 			<li><a href="#"><span class="glyphicon glyphicon-user">
 						Profile</a></li>
@@ -15,7 +15,7 @@
 			<li><a href="#"><span class="glyphicon glyphicon-cog">
 						Settings</a></li>
 			<li role="separator" class="divider"></li>
-			<li><a href="#"><span class="glyphicon glyphicon-log-out">
+			<li><a href="{{url_for('register.log_out')}}"><span class="glyphicon glyphicon-log-out" >
 						Log-out</a></li>
 		</ul></li>
 
@@ -52,21 +52,21 @@
 							<!-- /input-group -->
 						</div>
 						<div class="col-sm-6">
-							<h1 style="color: #00b1b1;">Nice Person</h1>
-							</span> <span><h4>Username</h4></span>
+							<h1 style="color: #00b1b1;">{{ first_name }} {{last_name}}</h1>
+							</span> <span><h4>{{user_name}}</h4></span>
 						</div>
 						<div class="clearfix"></div>
 						<hr style="margin: 5px 0 5px 0;">
 
 
 						<div class="col-sm-5 col-xs-6 tital "><h4>First Name:</h4></div>
-						<div class="col-sm-7 col-xs-6 "><h4>Nice</h4></div>
+						<div class="col-sm-7 col-xs-6 "><h4>{{ first_name }}</h4></div>
 						<div class="clearfix"></div>
 						<div class="bot-border"></div>
 
 
 						<div class="col-sm-5 col-xs-6 tital "><h4>Last Name:</h4></div>
-						<div class="col-sm-7"><span><h4>Person</h4></span></div>
+						<div class="col-sm-7"><span><h4>{{last_name}}</h4></span></div>
 						<div class="clearfix"></div>
 						<div class="bot-border"></div>
 
@@ -76,8 +76,8 @@
 						<div class="clearfix"></div>
 						<div class="bot-border"></div>
 
-						<div class="col-sm-5 col-xs-6 tital "><h4>Date Of Birth:</h4></div>
-						<div class="col-sm-7"><h4>23 may 2050</h4></div>
+						<div class="col-sm-5 col-xs-6 tital "><h4>E-mail</h4></div>
+						<div class="col-sm-7"><h4>{{e_mail}}</h4></div>
 
 						<div class="clearfix"></div>
 						<div class="bot-border"></div>

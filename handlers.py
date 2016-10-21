@@ -36,7 +36,5 @@ def map_page():
 def timeline_page():
     return render_template('index.html')
 
-@site.route('/userPage')
-def user_page():
-    return render_template('user_page.html')
+
 
