@@ -1,5 +1,8 @@
 import datetime
 import os
+import json
+import re
+import psycopg2 as dbapi2
 from flask import Flask,flash
 from flask import render_template
 from flask import url_for
@@ -29,8 +32,6 @@ def create_app():
     app.store.add_event(Event('World War II', date='15/12/1942', place='Turkey',content= 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
     app.store.add_event(Event('Train Accident', date='01/02/1985', place='California', content = 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
     app.initialize_database=initialize_database()
-    
-    
     return app
 
 
@@ -38,6 +39,7 @@ def create_app():
 def main():
     app = create_app()
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RTEENBUYUK'
+    
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
         port, debug = int(VCAP_APP_PORT), False
