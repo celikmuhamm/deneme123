@@ -12,22 +12,16 @@ from flask import redirect
 from event import Event
 from store import Store
 from user import User
-from flask_login import LoginManager
 import user
 from sqlconnection import initialize_database
-lm = LoginManager()
 
-@lm.user_loader
-def load_user(user_id):
-    return getUser(user_id)
+
 
 def create_app():
     app = Flask(__name__)
     app.user = User()
     app.register_blueprint(site)
     app.register_blueprint(register)
-    lm.init_app(app)
-    lm.login_view = 'register.user_page'
     app.store = Store()
     app.store.add_event(Event('World War II', date='15/12/1942', place='Turkey',content= 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
     app.store.add_event(Event('Train Accident', date='01/02/1985', place='California', content = 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
