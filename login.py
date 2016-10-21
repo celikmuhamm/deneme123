@@ -2,7 +2,6 @@ from flask import Blueprint, render_template,session,request,flash
 from flask import current_app
 from flask import redirect,url_for
 from datetime import datetime
-from wtforms import Form
 from user import User
 from user import setUserToDb
 from user import getUserFromDb

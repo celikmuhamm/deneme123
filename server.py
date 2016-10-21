@@ -12,7 +12,6 @@ from flask import redirect
 from event import Event
 from store import Store
 from user import User
-import user
 from sqlconnection import initialize_database
 
 
