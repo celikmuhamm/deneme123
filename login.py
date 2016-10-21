@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template,session,request,flash
 from flask import current_app
-from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask import redirect,url_for
 from datetime import datetime
 from flask_login import LoginManager
