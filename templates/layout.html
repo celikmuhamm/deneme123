@@ -17,6 +17,14 @@
 
 </head>
 <body>
+	 {% for message in get_flashed_messages() %}
+    <div class="flash">
+    	<div class="alert alert-warning">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>DeepMap says: {{message}} </strong>
+</div>
+    </div>
+    {% endfor %}
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
