@@ -26,7 +26,7 @@ def search(username,password):
             dbData = cursor.fetchone()
             
             if dbData is None:
-                status = 'There is no user with this username: ' + username +' ,if you not already, Sign-up for free!'
+                status = 'There is no user with this username '
             else:
                 if password == dbData[1]:  
                     status = 'Success'

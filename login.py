@@ -24,7 +24,7 @@ def login_page():
             flash(status)
             return render_template('home.html')
     
-     if session.get('user')==current_app.user.username:
+     if session.get('user')!=None:
         flash('Welcome back to your userpage: '+ current_app.user.username)
         return render_template('user_page.html',user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
      else:
@@ -42,7 +42,7 @@ def register_page():
          lastname = request.form['last_name']
          email = request.form['email']
          status = search(username,password)
-         if status is 'There is no user with this username: ' + username:
+         if status == 'There is no user with this username ':
              current_app.user.username = username
              current_app.user.password = password
              current_app.user.name = firstname
@@ -52,7 +52,7 @@ def register_page():
              flash('Welcome: '+username)
              return render_template('user_page.html',user_name = username,first_name = firstname,last_name = lastname,e_mail = email)
          else:
-             flash('The username: '+username +' already using by another user')
+             flash('The username: '+username +' already using by another user' )
              return render_template('home.html')
          
      else:
