@@ -12,7 +12,7 @@ from flask import redirect
 from event import Event
 from store import Store
 from user import User
-from sqlconnection import initialize_database
+from initialize_database import init_db
 
 
 
@@ -22,9 +22,9 @@ def create_app():
     app.register_blueprint(site)
     app.register_blueprint(register)
     app.store = Store()
+    app.init_db = init_db()
     app.store.add_event(Event('World War II', date='15/12/1942', place='Turkey',content= 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
     app.store.add_event(Event('Train Accident', date='01/02/1985', place='California', content = 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
-    app.initialize_database=initialize_database()
     return app
 
 
