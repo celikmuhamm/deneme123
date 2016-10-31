@@ -52,6 +52,7 @@ def init_db():
          userMapConnection = getConnection();
          userMapCursor = userMapConnection.cursor()
          userMapCursor.execute("""CREATE TABLE IF NOT EXISTS USERMAPTABLE (userMap_id varchar(20),user_id varchar(20),mapInformation varchar(40),relatedEvents varchar(40))""")
+         userMapCursor.execute("""INSERT INTO MMAPTABLE (userMap_id ,user_id,mapInformation,relatedEvents) VALUES('first','Admin','noLocation','noEvents')""")
          userMapConnection.commit()
          
     except userMapConnection.Error as userMapError:
