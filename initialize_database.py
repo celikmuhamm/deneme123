@@ -46,5 +46,16 @@ def init_db():
     except conn.Error as userError:
         print(userError)
         
-    conn.close()     
+    conn.close()   
+    
+    try:
+         userMapConnection = getConnection();
+         userMapCursor = userMapConnection.cursor()
+         userMapCursor.execute("""CREATE TABLE IF NOT EXISTS USERMAPTABLE (userMap_id varchar(20),user_id varchar(20),mapInformation varchar(40),relatedEvents varchar(40))""")
+         userMapConnection.commit()
+         
+    except userMapConnection.Error as userMapError:
+        print(userMapError)
+        
+    userMapConnection.close()     
     
