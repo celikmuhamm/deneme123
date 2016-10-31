@@ -16,6 +16,8 @@ def init_db():
         cursor.execute(query)
     
         cursor.execute("""DROP TABLE IF  EXISTS TIMETABLE """)
+        
+        cursor.execute("""DROP TABLE IF  EXISTS MMAPTABLE""") #main map table
    
     try:
         cursor.execute("""CREATE TABLE IF NOT EXISTS EVENTTABLE (title varchar(30), date varchar(10), place varchar(40))""")
@@ -27,7 +29,9 @@ def init_db():
         cursor.execute("""INSERT INTO TIMETABLE (map_id,decade,year,share_date,content_type,content_header) VALUES ('1',1960,1963,'1963-08-22','text','X-15 aircraft')""" )  
        
         cursor.execute("""INSERT INTO TIMETABLE (map_id,decade,year,share_date,content_type,content_header) VALUES ('2',2010,2016,'1963-06-03','text','Mohammed Morsi')""" )  
-       
+ 
+        cursor.execute("""INSERT INTO MMAPTABLE (post_id,user_id,lat,long,photo,video,document) VALUES (1,1,'41.1055936','29.0253398','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ITU-Lecture-Hall.JPG/270px-ITU-Lecture-Hall.JPG')""" )
+
         connection.commit()
     except connection.Error as error:
             print(error)
