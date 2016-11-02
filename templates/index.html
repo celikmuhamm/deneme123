@@ -6,17 +6,30 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}" />
 
-    <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+    <link rel="stylesheet " href="{{ url_for('static', filename='css/jquery-ui.css') }}" />
 
      <link rel="stylesheet" href="{{ url_for('static', filename='css/timeline.css') }}" />
 
 	 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.scss') }}" />
-
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/button.css') }}" />
 
   </head>
 
   <body>
-
+{% extends "layout.html" %}
+{% block title %}Timeline{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+ 	<p>
+         Operations
+         <button type="button" class="btn btn-primary btn-sm btn3d">insert</button>
+         <button type="button" class="btn btn-default btn-sm btn3d">delete</button>
+         <button type="button" class="btn btn-primary btn-sm btn3d">update</button>
+         <button type="button" class="btn btn-default btn-sm btn3d">select</button>
+        </p>
+	</div>
+</div>
     <p class="checkcaption">no modal boxes?</p>
 <div class="check">
 	<input type="checkbox" id="switch1" name="switch1" class="switch" />
@@ -120,11 +133,12 @@ It was a dangerous trip: clouds and fog made it difficult to navigate, her plane
   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>
 </article>
 
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+    
+    	<script src="{{ url_for('static', filename='js/jquery.min1.js') }}" ></script>
+     	<script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}" ></script>
+	<script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
-
-	 <script src="{{ url_for('static', filename='index.js') }}"></script>
+{% endblock %}
 
 
   </body>
