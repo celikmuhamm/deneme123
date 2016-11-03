@@ -9,6 +9,7 @@ from flask import url_for
 from handlers import site
 from login import register
 from userMapOperations import myMap
+from documents import add
 from flask import redirect
 from event import Event
 from store import Store
@@ -31,10 +32,11 @@ def create_app():
     app.register_blueprint(myMap)
     app.register_blueprint(register)
     app.register_blueprint(adminTable)
+    app.register_blueprint(add)
     app.store = Store()
     app.init_db = init_db()
-    app.store.add_event(Event('World War II', date='15/12/1942', place='Turkey',content= 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
-    app.store.add_event(Event('Train Accident', date='01/02/1985', place='California', content = 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
+#    app.store.add_event(Event('World War II', date='15/12/1942', place='Turkey',content= 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
+#    app.store.add_event(Event('Train Accident', date='01/02/1985', place='California', content = 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
     return app
 
 
