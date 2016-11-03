@@ -13,15 +13,15 @@ def init_db():
 
         """cursor.execute(DROP TABLE IF  EXISTS USERTABLE )"""
 
-        query = """DROP TABLE IF  EXISTS EVENTTABLE"""
-        cursor.execute(query)
+#        query = """DROP TABLE IF  EXISTS EVENTTABLE"""
+#        cursor.execute(query)
 
         cursor.execute("""DROP TABLE IF  EXISTS TIMETABLE """)
 
         cursor.execute("""DROP TABLE IF  EXISTS MMAPTABLE""") #main map table
 
     try:
-        cursor.execute("""CREATE TABLE IF NOT EXISTS EVENTTABLE (title varchar(30), date varchar(10), place varchar(40))""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS EVENTTABLE (title varchar(30), date varchar(10), place varchar(40), content varchar(300), event_id serial primary key)""")
 
         cursor.execute("""CREATE TABLE IF NOT EXISTS TIMETABLE (map_id varchar(40) primary key, decade int not null,year int not null,share_date date not null,content_type varchar(40),content_header  varchar(40))""")
 
@@ -29,6 +29,7 @@ def init_db():
 
         cursor.execute("""INSERT INTO TIMETABLE (map_id,decade,year,share_date,content_type,content_header) VALUES ('2',2010,2016,'1963-06-03','text','Mohammed Morsi')""" )
 
+        cursor.execute("""INSERT INTO MMAPTABLE (post_id,user_id,lat,long,photo,video,document) VALUES (1,1,'41.1055936','29.0253398','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ITU-Lecture-Hall.JPG/270px-ITU-Lecture-Hall.JPG')""" )
 
         connection.commit()
     except connection.Error as error:
@@ -59,17 +60,4 @@ def init_db():
         print(userMapError)
 
     userMapConnection.close()
-
-
-    try:
-         MMapC = getConnection();
-         MMapCursor = MMapC.cursor()
-         MMapCursor.execute("""CREATE TABLE IF NOT EXISTS MMAPTABLE (post_id INT,user_id varchar(20),lat varchar(20),long varchar(20),photo varchar(300),video varchar(300),document varchar(300))""")
-         MMapC.commit()
-         MMapCursor.execute("""INSERT INTO MMAPTABLE (post_id,user_id,lat,long,photo,video,document) VALUES (1,'1','41.1055936','29.0253398','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ITU-Lecture-Hall.JPG/270px-ITU-Lecture-Hall.JPG', '', '')""" )
-         MMapC.commit()
-    except MMapC.Error as MainMapErr:
-        print(MainMapErr)
-
-    MMapC.close()
 
