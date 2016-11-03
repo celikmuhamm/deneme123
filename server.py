@@ -17,6 +17,7 @@ from user import UserList
 from initialize_database import init_db
 from userMap import UserLocationStore
 from userMap import UserLocation
+from adminOperations import adminTable
 
 
 
@@ -29,6 +30,7 @@ def create_app():
     app.register_blueprint(site)
     app.register_blueprint(myMap)
     app.register_blueprint(register)
+    app.register_blueprint(adminTable)
     app.store = Store()
     app.init_db = init_db()
     app.store.add_event(Event('World War II', date='15/12/1942', place='Turkey',content= 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))

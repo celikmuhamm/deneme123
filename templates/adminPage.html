@@ -60,22 +60,16 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 					</button>
-					<h3 class="modal-title" id="lineModalLabel">Sign In</h3>
+					<h3 class="modal-title" id="lineModalLabel">Delete</h3>
 				</div>
 				<div class="modal-body">
 
 					<!-- content goes here -->
-					<form role="form" method="post" action='/userPage' data-toggle="validator" >
+					<form role="form" method="get" action='/deleteFunction' data-toggle="validator" >
 						<div class="form-group">
-							<label for="username">User Name</label> 
-							<input required class="form-control" name="username1"
+							<label for="username">User Name for delete</label> 
+							<input required class="form-control" name="user_name"
 								placeholder="Username" requiered>
-						</div>
-						<div class="form-group">
-							<label for="password">password</label>
-							 <input required type="password" class="form-control" name="password1"
-								placeholder="Password" >
-						</div>
 						<button type="submit" class="btn btn-primary">Submit</button>
 					</form>
 
@@ -95,21 +89,36 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 					</button>
-					<h3 class="modal-title" id="lineModalLabel">Sign In</h3>
+					<h3 class="modal-title" id="lineModalLabel">Update</h3>
 				</div>
 				<div class="modal-body">
 
 					<!-- content goes here -->
-					<form role="form" method="post" action='/userPage' data-toggle="validator" >
+					<form role="form" method="get" action='/updateFunction' data-toggle="validator" >
 						<div class="form-group">
 							<label for="username">User Name</label> 
-							<input required class="form-control" name="username1"
+							<input required class="form-control" name="user_name"
 								placeholder="Username" requiered>
 						</div>
 						<div class="form-group">
 							<label for="password">password</label>
-							 <input required type="password" class="form-control" name="password1"
+							 <input required type="password" class="form-control" name="password"
 								placeholder="Password" >
+						</div>
+						<div class="form-group">
+							<label for="password">Name</label>
+							 <input required  class="form-control" name="name"
+								placeholder="name" >
+						</div>
+						<div class="form-group">
+							<label for="password">Surname</label>
+							 <input required  class="form-control" name="surname"
+								placeholder="surname" >
+						</div>
+						<div class="form-group">
+							<label for="password">Email</label>
+							 <input required  class="form-control" name="email"
+								placeholder="email" >
 						</div>
 						<button type="submit" class="btn btn-primary">Submit</button>
 					</form>
