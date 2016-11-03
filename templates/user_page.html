@@ -1,8 +1,8 @@
-{% extends "layout.html" %} {% block title %}UserPage{% endblock %}
+{% extends "layout2.html" %} {% block title %}UserPage{% endblock %}
 {%block navbarsignup %}
 
 <ul class="nav navbar-nav navbar-right">
-	<li><a href="#">Link</a></li>
+
 	<li class="dropdown"><a href="#" class="dropdown-toggle"
 		data-toggle="dropdown" role="button" aria-haspopup="true"
 		aria-expanded="false"><span class="glyphicon glyphicon-user"></span>
@@ -94,6 +94,58 @@
 						<div class="clearfix"></div>
 						<div class="bot-border"></div>
 
+
+				 {% if userMap %}
+						<table id="glorious-table" class="table table-bordered table-responsive">
+
+                <thead>
+                    <tr>
+
+                        <th>Order</th>
+                        <th>Info</th>
+                        <th>Address</th>
+                        <th>Lat</th>
+                        <th>Lng</th>
+                    </tr>
+                </thead>
+
+                <tbody id="glorious-table-body">
+<!--                 {% for userLocation in userMap %} -->
+                    <tr>
+						<td>{{ userLocation.locationId }}</td>
+                        <td>{{ userLocation.mapInfo }}</td>
+                        <td>{{ userLocation.address }}</td>
+                        <td>{{ userLocation.lat }}</td>
+                        <td>{{ userLocation.lng }}</td>
+                    </tr>
+<!--                 {% endfor %} -->
+                </tbody>
+                {% endif %}
+            </table>
+            <form role="form" method="post" action='/userPage/map' >
+						<div class="form-group">
+							<label for="locationInfo">Location Information</label>
+							<input class="form-control" name="locationInfo"
+								placeholder="location info" required>
+						</div>
+						<div class="form-group">
+							<label for="address">Address</label>
+							 <input  class="form-control" name="address"
+								placeholder="address" required>
+						</div>
+						<div class="form-group">
+							<label for="lat">Lat</label>
+							<input class="form-control" name="lat"
+								placeholder="lat" required>
+						</div>
+						<div class="form-group">
+							<label for="lng">Lng</label>
+							 <input class="form-control" name="lng"
+								placeholder="lng" required>
+						</div>
+						<button type="submit" class="btn btn-primary">Add Location</button>
+					</form>
+
 						<!-- /.box-body -->
 					</div>
 					<!-- /.box -->
@@ -104,13 +156,7 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		$(function() {
-			$('#profile-image1').on('click', function() {
-				$('#profile-image-upload').click();
-			});
-		});
-	</script>
+
 </div>
 
 

@@ -6,6 +6,7 @@ from user import User
 from user import setUserToDb
 from user import getUserFromDb
 from user import search
+from userMap import UserLocationStore
 register = Blueprint('register', __name__)
 
 @register.route('/userPage',methods=['POST','GET'])
@@ -18,20 +19,21 @@ def login_page():
         if status == 'Success':
             current_app.user= getUserFromDb(username)
             session['user'] = username
-            flash('Welcome: '+username)
-            return render_template('user_page.html',user_name = username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+            flash('Welcome: '+ username)
+            current_app.usermap = current_app.usermap.getLocations(username)
+            return render_template('user_page.html',userMap = current_app.usermap.myLocations, user_name = username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
         else:
             flash(status)
             return render_template('home.html')
-    
+
      if session.get('user')!=None:
         flash('Welcome back to your userpage: '+ current_app.user.username)
         return render_template('user_page.html',user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
      else:
         flash('Please sign in or register for DeepMap')
         return render_template('home.html')
-          
-          
+
+
 
 @register.route('/register',methods=['GET', 'POST'])
 def register_page():
@@ -54,11 +56,11 @@ def register_page():
          else:
              flash('The username: '+username +' already using by another user' )
              return render_template('home.html')
-         
+
      else:
-         
+
          return render_template('home.html')
-@register.route('/logout')     
+@register.route('/logout')
 def log_out():
-          session.pop('user', None)       
-          return render_template('home.html')   
+          session.pop('user', None)
+          return render_template('home.html')

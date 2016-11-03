@@ -1,7 +1,15 @@
 body {
     padding-top: 0px;
     font-family: 'Fontin-Sans', serif;
+     position: relative;
+    overflow-x: hidden;
 }
+body,
+html { height: 100%;}
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {background-color: transparent;}
+
 
 h1 {
     color: #23314D;
@@ -40,3 +48,6 @@ footer {
         width: 100%;
         margin: 0 auto 0 auto;
     }
+
+
+
