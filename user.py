@@ -78,3 +78,62 @@ def setUserToDb(User):
         connection.close()
     except connection.Error as error:
             print(error)
+def updateUser(User):
+    connection = getConnection()
+    cursor = connection.cursor()
+    username = User.username
+    password = User.password
+    email = User.email
+    name = User.name
+    surname =User.surname
+    try:
+        cursor.execute("""UPDATE USERTABLE SET username=%s password=%s email=%s name=%s surname=%s WHERE userMap_id=%d;""",(username,password,email,name,surname))
+        connection.commit()
+        connection.close()
+    except connection.Error as error:
+            print(error)           
+            
+def deleteUser(username):
+    connection = getConnection()
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute("""DELETE FROM USERMAPTABLE WHERE username=%d;""",(username,))
+        connection.commit()
+        connection.close()
+    except connection.Error as error:
+            print(error)           
+                        
+            
+class UserList:
+    def __init__(self):
+        self.userTable = []
+        self.lastUserCounter = 0
+        
+    def getUsers(self):
+            conn = getConnection()
+            cursor = conn.cursor()
+            try:
+                    cursor.execute(""" SELECT * FROM USERTABLE;""")
+                            
+                    conn.commit()
+                    dbData = cursor.fetchall()
+                    if dbData != None:
+                        for users in dbData:
+        
+                            user = User()
+                            user.username = users[0]
+                            user.password = users[1]
+                            user.email = users[2]
+                            user.name = users[3]
+                            user.surname = users[4]
+                            self.userTable.append(user)
+                            self.lastUserCounter += 1
+
+                    cursor.close()
+                    conn.close()
+                    return User
+            except conn.Error as error:
+                    print(error)
+                    return 'Error'
+            return self

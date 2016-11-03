@@ -1,0 +1,133 @@
+{% extends "layout2.html" %} {% block title %}UserPage{% endblock %}
+{%block navbarsignup %}
+
+<ul class="nav navbar-nav navbar-right">
+
+	<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown" role="button" aria-haspopup="true"
+		aria-expanded="false"><span class="glyphicon glyphicon-user"></span>
+			{{ user_name }}</a>
+		<ul class="dropdown-menu">
+			<li><a href="#"><span class="glyphicon glyphicon-user">
+						Profile</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-envelope">
+						Inbox</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-cog">
+						Settings</a></li>
+			<li role="separator" class="divider"></li>
+			<li><a href="{{url_for('register.log_out')}}"><span class="glyphicon glyphicon-log-out" >
+						Log-out</a></li>
+		</ul></li>
+
+</ul>
+
+{% endblock %}{% block content %}
+{% if userTable %}
+						<table id="glorious-table" class="table table-bordered table-responsive">
+
+                <thead>
+                    <tr>
+
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+
+                <tbody id="glorious-table-body">
+<!--                 {% for users in userTable %} -->
+                    <tr>
+                        <td>{{ users.username }}</td>
+                        <td>{{ users.name }}</td>
+                        <td>{{ users.surname }}</td>
+                        <td>{{ users.email }}</td>
+                    </tr>
+<!--                 {% endfor %} -->
+                </tbody>
+                {% endif %}
+               <div> <a data-toggle="modal" class="btn btn-info"
+		data-target="#squareSigninModal" role="button">Delete</a>
+		 <a data-toggle="modal" class="btn btn-info"
+		data-target="#squareSigninModal" role="button">Update</a>
+		</div>
+                <div class="row centered-form">
+	<div class="centered modal fade" id="squareSigninModal" tabindex="-1"
+		role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h3 class="modal-title" id="lineModalLabel">Delete</h3>
+				</div>
+				<div class="modal-body">
+
+					<!-- content goes here -->
+					<form role="form" method="get" action='/deleteFunction' data-toggle="validator" >
+						<div class="form-group">
+							<label for="username">User Name for delete</label> 
+							<input required class="form-control" name="user_name"
+								placeholder="Username" requiered>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+       
+                <div class="row centered-form">
+	<div class="centered modal fade" id="squareSigninModal" tabindex="-1"
+		role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h3 class="modal-title" id="lineModalLabel">Update</h3>
+				</div>
+				<div class="modal-body">
+
+					<!-- content goes here -->
+					<form role="form" method="get" action='/updateFunction' data-toggle="validator" >
+						<div class="form-group">
+							<label for="username">User Name</label> 
+							<input required class="form-control" name="user_name"
+								placeholder="Username" requiered>
+						</div>
+						<div class="form-group">
+							<label for="password">password</label>
+							 <input required type="password" class="form-control" name="password"
+								placeholder="Password" >
+						</div>
+						<div class="form-group">
+							<label for="password">Name</label>
+							 <input required  class="form-control" name="name"
+								placeholder="name" >
+						</div>
+						<div class="form-group">
+							<label for="password">Surname</label>
+							 <input required  class="form-control" name="surname"
+								placeholder="surname" >
+						</div>
+						<div class="form-group">
+							<label for="password">Email</label>
+							 <input required  class="form-control" name="email"
+								placeholder="email" >
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+                
+                {% endblock %}

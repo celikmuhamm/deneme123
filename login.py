@@ -6,7 +6,9 @@ from user import User
 from user import setUserToDb
 from user import getUserFromDb
 from user import search
+from user import UserList
 from userMap import UserLocationStore
+
 register = Blueprint('register', __name__)
 
 @register.route('/userPage',methods=['POST','GET'])
@@ -19,8 +21,7 @@ def login_page():
         if status == 'Success':
             current_app.user= getUserFromDb(username)
             session['user'] = username
-            flash('Welcome: '+ username)
-            current_app.usermap = current_app.usermap.getLocations(username)
+            current_app.usermap.getLocations(username)
             return render_template('user_page.html',userMap = current_app.usermap.myLocations, user_name = username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
         else:
             flash(status)
@@ -51,7 +52,6 @@ def register_page():
              current_app.user.surname = lastname
              current_app.user.email = email
              setUserToDb( current_app.user)
-             flash('Welcome: '+username)
              return render_template('user_page.html',user_name = username,first_name = firstname,last_name = lastname,e_mail = email)
          else:
              flash('The username: '+username +' already using by another user' )
@@ -64,3 +64,12 @@ def register_page():
 def log_out():
           session.pop('user', None)
           return render_template('home.html')
+      
+@register.route('/adminPage')
+def adminPage():
+          if current_app.user.username == 'deepMapAdmin':
+              current_app.userList.getUsers()
+              return render_template('adminPage.html',user_name = current_app.user.username,userTable = current_app.userList.userTable)
+          else: 
+              return render_template('home.html')
+      
