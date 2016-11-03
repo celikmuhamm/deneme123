@@ -19,10 +19,12 @@ def events_page():
     total_number = current_app.store.last_event_id
     return render_template('events.html',tot_num =total_number )
 
-@site.route('/events/documents')
+@site.route('/events/documents', methods=['GET', 'POST'])
 def documents_page():
+    form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
     events = current_app.store.get_events()
-    return render_template('documents.html', events=sorted(events.items()))
+    return render_template('documents.html', events=sorted(events.items()), form=form)
+
 
 @site.route('/signUp')
 def sign_up():
