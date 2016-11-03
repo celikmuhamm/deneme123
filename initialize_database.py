@@ -29,7 +29,6 @@ def init_db():
 
         cursor.execute("""INSERT INTO TIMETABLE (map_id,decade,year,share_date,content_type,content_header) VALUES ('2',2010,2016,'1963-06-03','text','Mohammed Morsi')""" )
 
-        cursor.execute("""INSERT INTO MMAPTABLE (post_id,user_id,lat,long,photo,video,document) VALUES (1,1,'41.1055936','29.0253398','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ITU-Lecture-Hall.JPG/270px-ITU-Lecture-Hall.JPG')""" )
 
         connection.commit()
     except connection.Error as error:
@@ -58,4 +57,17 @@ def init_db():
         print(userMapError)
 
     userMapConnection.close()
+
+
+    try:
+         MMapC = getConnection();
+         MMapCursor = MMapC.cursor()
+         MMapCursor.execute("""CREATE TABLE IF NOT EXISTS MMAPTABLE (post_id INT,user_id varchar(20),lat varchar(20),long varchar(20),photo varchar(300),video varchar(300),document varchar(300))""")
+         MMapC.commit()
+         MMapCursor.execute("""INSERT INTO MMAPTABLE (post_id,user_id,lat,long,photo,video,document) VALUES (1,'1','41.1055936','29.0253398','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ITU-Lecture-Hall.JPG/270px-ITU-Lecture-Hall.JPG', '', '')""" )
+         MMapC.commit()
+    except MMapC.Error as MainMapErr:
+        print(MainMapErr)
+
+    MMapC.close()
 

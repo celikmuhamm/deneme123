@@ -36,5 +36,7 @@ def map_page():
 def timeline_page():
     return render_template('index.html')
 
-
+@site.route('/maps/edit')
+def edit_location():
+    return render_template('locationEdit.html')
 
