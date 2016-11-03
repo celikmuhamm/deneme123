@@ -49,8 +49,10 @@ def init_db():
     conn.close()
 
     try:
+         query = """DROP TABLE IF  EXISTS USERMAPTABLE"""
          userMapConnection = getConnection();
          userMapCursor = userMapConnection.cursor()
+         userMapCursor.execute(query)
          userMapCursor.execute("""CREATE TABLE IF NOT EXISTS USERMAPTABLE (userMap_id INT,user_id varchar(20),mapInformation varchar(70),address varchar(80),lat FLOAT(10) NOT NULL,lng FLOAT(10) NOT NULL)""")
          userMapConnection.commit()
 

@@ -21,19 +21,19 @@ class UserLocationStore:
         try:
             userMapConnection = getConnection();
             userMapCursor = userMapConnection.cursor()
-            userMapCursor.execute("""INSERT INTO USERMAPTABLE (userMap_id,user_id,mapInformation,address,lat,lng) VALUES(%s,%s,%s,%s,%s,%s)""", (userLocation.locationId, userLocation.userName, userLocation.mapInfo, userLocation.address, userLocation.lat, userLocation.lng ))
+            userMapCursor.execute("""INSERT INTO USERMAPTABLE (userMap_id,user_id,mapInformation,address,lat,lng) VALUES(%s,%s,%s,%s,%s,%s);""", (userLocation.locationId, userLocation.userName, userLocation.mapInfo, userLocation.address, userLocation.lat, userLocation.lng ))
             userMapConnection.commit()
-
+            userMapCursor.close()
+            userMapConnection.close()
         except userMapConnection.Error as userMapError:
             print(userMapError)
 
-        userMapConnection.close()
 
     def getLocations(self,username):
         try:
             userMapConnection = getConnection();
             userMapCursor = userMapConnection.cursor()
-            userMapCursor.execute("""SELECT * FROM USERMAPTABLE WHERE user_id=%s""",(username,))
+            userMapCursor.execute("""SELECT * FROM USERMAPTABLE WHERE user_id=%s;""",(username,))
             userMapConnection.commit()
             dbData = userMapCursor.fetchall()
             if dbData != None:
@@ -49,18 +49,17 @@ class UserLocationStore:
                     self.myLocations.append(userLocations)
                     self.lastLocationId += 1
 
-
+            userMapCursor.close()
+            userMapConnection.close()
         except userMapConnection.Error as userMapError:
             print(userMapError)
-
-        userMapConnection.close()
         return self
 
     def updateLocationInformation(self, locationId, newInfo):
          try:
             userMapConnection = getConnection();
             userMapCursor = userMapConnection.cursor()
-            userMapcursor.execute("""UPDATE USERMAPTABLE SET mapInformation=%s WHERE userMap_id=%d""",(newInfo,locationId))
+            userMapcursor.execute("""UPDATE USERMAPTABLE SET mapInformation=%s WHERE userMap_id=%d;""",(newInfo,locationId))
             userMapConnection.commit()
          except userMapConnection.Error as userMapError:
             print(userMapError)
@@ -71,18 +70,20 @@ class UserLocationStore:
          try:
             userMapConnection = getConnection();
             userMapCursor = userMapConnection.cursor()
-            userMapcursor.execute("""UPDATE USERMAPTABLE SET address=%s WHERE userMap_id=%d""",(newaddress,locationId))
+            userMapcursor.execute("""UPDATE USERMAPTABLE SET address=%s WHERE userMap_id=%d;""",(newaddress,locationId))
             userMapConnection.commit()
+            userMapCursor.close()
+            userMapConnection.close()
          except userMapConnection.Error as userMapError:
             print(userMapError)
-
-         userMapConnection.close()
+            
+        
 
     def deleteLocation(self, locationId, newAddress):
          try:
             userMapConnection = getConnection();
             userMapCursor = userMapConnection.cursor()
-            userMapcursor.execute("""DELETE FROM USERMAPTABLE WHERE userMap_id=%d""",(locationId,))
+            userMapcursor.execute("""DELETE FROM USERMAPTABLE WHERE userMap_id=%d;""",(locationId,))
             userMapConnection.commit()
          except userMapConnection.Error as userMapError:
             print(userMapError)
