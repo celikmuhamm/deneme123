@@ -53,7 +53,7 @@ class Store:
             cursor = connection.cursor()
             query = """ SELECT title,date,place,content FROM EVENTTABLE WHERE event_id= %d;"""
         try:
-        cursor.execute(query,(event_id,))
+            cursor.execute(query,(event_id,))
             connection.commit()
         except connection.Error as error:
             print(error)
@@ -70,7 +70,7 @@ class Store:
             cursor = connection.cursor()
             query = """UPDATE EVENTTABLE SET title = %s,date = %s, place = %s, content = %s WHERE event_id = %d"""
         try:
-        cursor.execute(query,(event.title, event.date, event.place,event.content, event_id,))
+            cursor.execute(query,(event.title, event.date, event.place,event.content, event_id,))
             connection.commit()
         except connection.Error as error:
             print(error)
