@@ -15,7 +15,7 @@ def add_new_document_page():
     if request.method == 'GET':
         form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
         events = current_app.store.get_events()
-        return render_template('documents.html', events=sorted(events.items()), form=form)    
+        return render_template('documents.html', events=events, form=form)    
     else:
         title_temp = request.form['inputTitle']
         date_temp = request.form['inputDate']
@@ -25,21 +25,21 @@ def add_new_document_page():
         current_app.store.add_event(event_temp)
         events = current_app.store.get_events()
         form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
-        return render_template('documents.html', events=sorted(events.items()), form = form)
+        return render_template('documents.html', events=events, form = form)
     
 @add.route('/events/documents/delete', methods=['GET', 'POST'])
 def delete_document():
     if request.method == 'GET':
         events = current_app.store.get_events()
         form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
-        return render_template('documents.html', events=sorted(events.items()), form=form)
+        return render_template('documents.html', events=events, form=form)
     else:
         event_id_list = request.form.getlist('event_id_list')
         for event_id in event_id_list:
             current_app.store.delete_event(int(event_id))
         events = current_app.store.get_events()
         form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
-        return render_template('documents.html', events=sorted(events.items()), form=form)
+        return render_template('documents.html', events=events, form=form)
 
 
    
@@ -60,7 +60,7 @@ def update_documents_page(event_id):
         current_app.store.update_event(event_temp,event_id)
         events = current_app.store.get_events()
         form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
-        return render_template('documents.html', events=sorted(events.items()), form=form)
+        return render_template('documents.html', events=events, form=form)
     
     
 
