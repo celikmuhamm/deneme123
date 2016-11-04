@@ -87,7 +87,7 @@ def updateUser(User):
     name = User.name
     surname =User.surname
     try:
-        cursor.execute("""UPDATE USERTABLE SET username=%s password=%s email=%s name=%s surname=%s WHERE userMap_id=%d;""",(username,password,email,name,surname))
+        cursor.execute("""UPDATE USERTABLE SET username=%s, password=%s,email=%s, name=%s, surname=%s WHERE username=%s;""",(username,password,email,name,surname,username))
         connection.commit()
         connection.close()
     except connection.Error as error:
@@ -98,7 +98,7 @@ def deleteUser(username):
     cursor = connection.cursor()
 
     try:
-        cursor.execute("""DELETE FROM USERMAPTABLE WHERE username=%d;""",(username,))
+        cursor.execute("""DELETE FROM USERTABLE WHERE username=%s;""",(username,))
         connection.commit()
         connection.close()
     except connection.Error as error:
@@ -113,6 +113,8 @@ class UserList:
     def getUsers(self):
             conn = getConnection()
             cursor = conn.cursor()
+            self.userTable = []
+            self.lastUserCounter = 0
             try:
                     cursor.execute(""" SELECT * FROM USERTABLE;""")
                             

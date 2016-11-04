@@ -47,12 +47,12 @@
                 </tbody>
                 {% endif %}
                <div> <a data-toggle="modal" class="btn btn-info"
-		data-target="#squareSigninModal" role="button">Delete</a>
+		data-target="#deleteModal" role="button">Delete</a>
 		 <a data-toggle="modal" class="btn btn-info"
 		data-target="#squareSigninModal" role="button">Update</a>
 		</div>
                 <div class="row centered-form">
-	<div class="centered modal fade" id="squareSigninModal" tabindex="-1"
+	<div class="centered modal fade" id="deleteModal" tabindex="-1"
 		role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -65,7 +65,7 @@
 				<div class="modal-body">
 
 					<!-- content goes here -->
-					<form role="form" method="get" action='/deleteFunction' data-toggle="validator" >
+					<form role="form" method="post" action='/deleteFunction' data-toggle="validator" >
 						<div class="form-group">
 							<label for="username">User Name for delete</label> 
 							<input required class="form-control" name="user_name"
@@ -94,7 +94,7 @@
 				<div class="modal-body">
 
 					<!-- content goes here -->
-					<form role="form" method="get" action='/updateFunction' data-toggle="validator" >
+					<form role="form" method="post" action='/updateFunction' data-toggle="validator" >
 						<div class="form-group">
 							<label for="username">User Name</label> 
 							<input required class="form-control" name="user_name"
@@ -107,12 +107,12 @@
 						</div>
 						<div class="form-group">
 							<label for="password">Name</label>
-							 <input required  class="form-control" name="name"
+							 <input required  class="form-control" name="first_name"
 								placeholder="name" >
 						</div>
 						<div class="form-group">
 							<label for="password">Surname</label>
-							 <input required  class="form-control" name="surname"
+							 <input required  class="form-control" name="last_name"
 								placeholder="surname" >
 						</div>
 						<div class="form-group">
