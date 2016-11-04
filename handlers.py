@@ -23,7 +23,7 @@ def events_page():
 def documents_page():
     form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
     events = current_app.store.get_events()
-    return render_template('documents.html', events=sorted(events.items()), form=form)
+    return render_template('documents.html', events=events, form=form)
 
 
 @site.route('/signUp')
