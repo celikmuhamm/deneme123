@@ -56,7 +56,7 @@
    </div>    
   		
 
-  	 
+  	 	{% if events %}
 	        <form role="form" action="/events/documents/delete"  method="post" name="documents" class="form-horizontal">
 	        {% for event_id, event in events %}
 	         <div class="container">
@@ -85,7 +85,7 @@
 	
 			<button type="submit" name="delete" class="btn btn-primary">Delete</button>
 			</form>
-			
+			{% endif %}
 			
 			
 		
