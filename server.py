@@ -9,6 +9,8 @@ from flask import url_for
 from handlers import site
 from login import register
 from userMapOperations import myMap
+from friendOperations import friends
+from relation import FriendStore
 from documents import add
 from flask import redirect
 from event import Event
@@ -27,12 +29,14 @@ def create_app():
     app.user = User()
     app.userList = UserList()
     app.usermap = UserLocationStore()
+    app.friendStore = FriendStore()
     app.userlocation = UserLocation()
     app.register_blueprint(site)
     app.register_blueprint(myMap)
     app.register_blueprint(register)
     app.register_blueprint(adminTable)
     app.register_blueprint(add)
+    app.register_blueprint(friends)
     app.store = Store()
     app.init_db = init_db()
 #    app.store.add_event(Event('World War II', date='15/12/1942', place='Turkey',content= 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))

@@ -95,12 +95,12 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav  nav-stacked" id="menu">
 
-				<li><a href="#"><span
+				<li><a href={{url_for('myMap.getLocations')}}><span
 						class="fa-stack fa-lg pull-left"><i
 							class="fa-map fa-stack-1x"></i></span> My Map</a>
 				<li><a href="#"><span class="fa-stack fa-lg pull-left"><i
 							class="fa fa-bell-o fa-stack-1x "></i></span>Notifications</a></li>
-				<li><a href="#"> <span class="fa-stack fa-lg pull-left"><i
+				<li><a href={{url_for('friends.getFriends')}}> <span class="fa-stack fa-lg pull-left"><i
 							class="fa fa-users fa-stack-1x "></i></span>Friends
 				</a></li>
 				<li><a href="#"><span class="fa-stack fa-lg pull-left"><i

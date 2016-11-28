@@ -1,0 +1,109 @@
+{% extends "layout2.html" %} {% block title %}FriendsPage{% endblock %}
+{%block navbarsignup %}
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<ul class="nav navbar-nav navbar-right">
+
+	<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown" role="button" aria-haspopup="true"
+		aria-expanded="false"><span class="glyphicon glyphicon-user"></span>
+			{{ user_name }}</a>
+		<ul class="dropdown-menu">
+			<li><a href="#"><span class="glyphicon glyphicon-user">
+						Profile</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-envelope">
+						Inbox</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-cog">
+						Settings</a></li>
+			<li role="separator" class="divider"></li>
+			<li><a href="{{url_for('register.log_out')}}"><span class="glyphicon glyphicon-log-out" >
+						Log-out</a></li>
+		</ul></li>
+
+</ul>
+
+{% endblock %} {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='css/friends.css') }}" />
+<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<div class="container bootstrap snippet">
+
+  <div class="header">
+    <h3 class="text-muted prj-name">
+        <span class="fa fa-users fa-2x principal-title"></span>
+        Friend zone
+    </h3>
+  </div>
+
+
+  <div class="jumbotron list-content">
+    <ul class="list-group">
+      <li href="#" class="list-group-item title">
+            </li>
+        Your friend zone
+        	 {% if friends %}
+
+                {% for friend in friends %} 
+                     <li href="#" class="list-group-item text-left">
+        <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
+        <label class="name">
+           {{friend.friendUsername}}
+        </label>
+        <label class="pull-right">
+            <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
+            <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
+            <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" href="#" title="Send message"></a>
+        </label>
+        <div class="break"></div>
+      </li>
+                 {% endfor %} 
+                
+                {% endif %}
+
+     
+      <li href="#" class="list-group-item text-left">
+        <a class="btn btn-block btn-primary">
+            <i class="glyphicon glyphicon-refresh"></i>
+            Load more...
+        </a>
+      </li>
+      
+    </ul>
+    
+  </div>
+      <div> <a data-toggle="modal" class="btn btn-info"
+		data-target="#addNewFriend" role="button">Find New Friends</a>
+		</div>
+                <div class="row centered-form">
+	<div class="centered modal fade" id="addNewFriend" tabindex="-1"
+		role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h3 class="modal-title" id="lineModalLabel">Delete</h3>
+				</div>
+				<div class="modal-body">
+
+					<!-- content goes here -->
+					<form role="form" method="post" action='/addNewFriends' data-toggle="validator" >
+						<div class="form-group">
+							<label for="username">Username of the friend</label> 
+							<input required class="form-control" name="user_name"
+								placeholder="Username" requiered>
+						<button type="submit" class="btn btn-primary">Add</button>
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+  </div>
+</div>                
+           
+{% endblock %}
+                      
