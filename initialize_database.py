@@ -40,7 +40,7 @@ def init_db():
     try:
          conn = getConnection();
          userCursor = conn.cursor()
-         userCursor.execute("""DROP TABLE IF  EXISTS USERMAPTABLE """)
+         userCursor.execute("""DROP TABLE IF  EXISTS USERTABLE """)
          userCursor.execute("""CREATE TABLE IF NOT EXISTS USERTABLE (username varchar(20) UNIQUE,password varchar(20), email varchar(40),name varchar(20),surname varchar(20))""")
          conn.commit()
 
