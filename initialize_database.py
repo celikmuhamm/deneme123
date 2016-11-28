@@ -40,7 +40,7 @@ def init_db():
     try:
          conn = getConnection();
          userCursor = conn.cursor()
-         userCursor.execute("""CREATE TABLE IF NOT EXISTS USERTABLE (username varchar(20),password varchar(20), email varchar(40),name varchar(20),surname varchar(20))""")
+         userCursor.execute("""CREATE TABLE IF NOT EXISTS USERTABLE (username varchar(20) UNIQUE,password varchar(20), email varchar(40),name varchar(20),surname varchar(20))""")
          conn.commit()
 
     except conn.Error as userError:
@@ -49,7 +49,6 @@ def init_db():
     conn.close()
 
     try:
-         
          userMapConnection = getConnection();
          userMapCursor = userMapConnection.cursor()
          userMapCursor.execute("""DROP TABLE IF  EXISTS USERMAPTABLE """)
@@ -60,4 +59,16 @@ def init_db():
         print(userMapError)
 
     userMapConnection.close()
+    
+    try:
+         
+         socialTableconn = getConnection();
+         socialTablecursor = socialTableconn.cursor()
+         socialTablecursor.execute("""DROP TABLE IF  EXISTS FRIENDSTABLE """)
+         socialTablecursor.execute("""CREATE TABLE IF NOT EXISTS FRIENDSTABLE (friendRecordId INT,user_id varchar(20) references USERTABLE(username) on delete cascade,firends_id varchar(20) references USERTABLE(username) on delete cascade)""")
+         socialTableconn.commit()
 
+    except socialTableconn.Error as socialError:
+        print(socialError)
+
+    socialTableconn.close()
