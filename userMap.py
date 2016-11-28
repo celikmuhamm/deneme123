@@ -1,11 +1,11 @@
 from sqlconnection import getConnection
 
 class UserLocation:
-    def __init__(self, userName=None, mapInfo=None, address=None, lat=None, lng=None):
+    def __init__(self, userName=None    , mapInfo=None, locationLabel=None,lat=None, lng=None):
         self.userName = userName
         self.mapInfo = mapInfo
-        self.address = address
         self.lat = lat
+        self.locationLabel = locationLabel
         self.lng = lng
         self.locationId=0
 
@@ -21,7 +21,7 @@ class UserLocationStore:
         try:
             userMapConnection = getConnection();
             userMapCursor = userMapConnection.cursor()
-            userMapCursor.execute("""INSERT INTO USERMAPTABLE (userMap_id,user_id,mapInformation,address,lat,lng) VALUES(%s,%s,%s,%s,%s,%s);""", (userLocation.locationId, userLocation.userName, userLocation.mapInfo, userLocation.address, userLocation.lat, userLocation.lng ))
+            userMapCursor.execute("""INSERT INTO USERMAPTABLE (userMap_id,user_id,mapInformation,locationLabel,lat,lng) VALUES(%s,%s,%s,%s,%s,%s);""", (userLocation.locationId, userLocation.userName, userLocation.mapInfo,userLocation.locationLabel,userLocation.lat, userLocation.lng ))
             userMapConnection.commit()
             userMapCursor.close()
             userMapConnection.close()
@@ -31,6 +31,8 @@ class UserLocationStore:
 
     def getLocations(self,username):
         try:
+            self.lastLocationId = 0
+            self.myLocations = []
             userMapConnection = getConnection();
             userMapCursor = userMapConnection.cursor()
             userMapCursor.execute("""SELECT * FROM USERMAPTABLE WHERE user_id=%s;""",(username,))
@@ -42,14 +44,17 @@ class UserLocationStore:
                     userLocations = UserLocation()
                     userLocations.userName = locations[1]
                     userLocations.mapInfo = locations[2]
-                    userLocations.address = locations[3]
+                    userLocations.locationLabel = locations[3]
                     userLocations.lat = locations[4]
                     userLocations.lng = locations[5]
                     userLocations.locationId=locations[0]
+                    
                     self.myLocations.append(userLocations)
+                    location = self.myLocations[0]
                     self.lastLocationId += 1
 
             userMapCursor.close()
+           
             userMapConnection.close()
         except userMapConnection.Error as userMapError:
             print(userMapError)

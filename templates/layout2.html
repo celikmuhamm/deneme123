@@ -23,7 +23,9 @@
 </head>
 <body>
 
-
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
 
 
 	<nav class="navbar navbar-inverse no-margin navbar-static-top">

@@ -22,14 +22,24 @@ def login_page():
             current_app.user= getUserFromDb(username)
             session['user'] = username
             current_app.usermap.getLocations(username)
-            return render_template('user_page.html',userMap = current_app.usermap.myLocations, user_name = username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+            markerLocations = []
+            for locations in current_app.usermap.myLocations:
+               newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
+               markerLocations.append(newLocation)
+                
+            return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
         else:
             flash(status)
             return render_template('home.html')
 
      if session.get('user')!=None:
-        flash('Welcome back to your userpage: '+ current_app.user.username)
-        return render_template('user_page.html',user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+        markerLocations = []
+        for locations in current_app.usermap.myLocations:
+               newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
+               markerLocations.append(newLocation)
+                
+        return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+
      else:
         flash('Please sign in or register for DeepMap')
         return render_template('home.html')
@@ -52,7 +62,8 @@ def register_page():
              current_app.user.surname = lastname
              current_app.user.email = email
              setUserToDb( current_app.user)
-             return render_template('user_page.html',user_name = username,first_name = firstname,last_name = lastname,e_mail = email)
+             markerLocations = []
+             return render_template('user_page.html',markerLocations = markerLocations,user_name = username,first_name = firstname,last_name = lastname,e_mail = email)
          else:
              flash('The username: '+username +' already using by another user' )
              return render_template('home.html')
