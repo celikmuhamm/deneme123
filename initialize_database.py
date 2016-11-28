@@ -23,11 +23,11 @@ def init_db():
     try:
         cursor.execute("""CREATE TABLE IF NOT EXISTS EVENTTABLE (title varchar(30), date varchar(10), place varchar(40), content varchar(150), event_id serial primary key)""")
 
-        cursor.execute("""CREATE TABLE IF NOT EXISTS TIMETABLE (map_id varchar(40) primary key, decade int not null,year int not null,share_date date not null,content_type varchar(40),content_header  varchar(40))""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS TIMETABLE (map_id varchar(40) primary key references TIMEMAPTABLE(mapID) on delete cascade, decade int not null,year int not null,share_date date not null,content_type varchar(40),content_header  varchar(40))""")
 
-        cursor.execute("""INSERT INTO TIMETABLE (map_id,decade,year,share_date,content_type,content_header) VALUES ('1',1960,1963,'1963-08-22','text','X-15 aircraft')""" )
+ #       cursor.execute("""INSERT INTO TIMETABLE (map_id,decade,year,share_date,content_type,content_header) VALUES ('1',1960,1963,'1963-08-22','text','X-15 aircraft')""" )
 
-        cursor.execute("""INSERT INTO TIMETABLE (map_id,decade,year,share_date,content_type,content_header) VALUES ('2',2010,2016,'1963-06-03','text','Mohammed Morsi')""" )
+ #       cursor.execute("""INSERT INTO TIMETABLE (map_id,decade,year,share_date,content_type,content_header) VALUES ('2',2010,2016,'1963-06-03','text','Mohammed Morsi')""" )
 
  #       cursor.execute("""INSERT INTO MMAPTABLE (post_id,user_id,lat,long,photo,video,document) VALUES (1,1,'41.1055936','29.0253398','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ITU-Lecture-Hall.JPG/270px-ITU-Lecture-Hall.JPG')""" )
 
@@ -48,7 +48,20 @@ def init_db():
         print(userError)
 
     conn.close()
+     try:
+         timeMapconnection = getConnection();
+         timeMapCursor = timeMapconnection.cursor()
+         timeMapCursor.execute("""DROP TABLE IF  EXISTS TIMEMAPTABLE """)
+         timeMapCursor.execute("""CREATE TABLE IF NOT EXISTS TIMEMAPTABLE (mapID varchar(40) primary key, number_of_shared_item int not null)""")
+         timeMapCursor.execute("""INSERT INTO TIMEMAPTABLE (mapID,number_of_shared_item) VALUES ('0',60)""")
+         timeMapCursor.execute("""INSERT INTO TIMEMAPTABLE (mapID,number_of_shared_item) VALUES ('1',190)""")
+         timeMapCursor.execute("""INSERT INTO TIMEMAPTABLE (mapID,number_of_shared_item) VALUES ('2',160)""")
+         timeMapCursor.execute("""INSERT INTO TIMEMAPTABLE (mapID,number_of_shared_item) VALUES ('3',1000)""")
+         timeMapconnection.commit()
+    except timeMapconnection.Error as timeMapError:
+         print(timeMapError)
 
+    timeMapconnection.close()
     try:
          userMapConnection = getConnection();
          userMapCursor = userMapConnection.cursor()
