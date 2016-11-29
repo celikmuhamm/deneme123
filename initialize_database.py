@@ -13,15 +13,23 @@ def init_db():
 
         """cursor.execute(DROP TABLE IF  EXISTS USERTABLE )"""
 
-#        query = """DROP TABLE IF  EXISTS EVENTTABLE"""
-#        cursor.execute(query)
+        query = """DROP TABLE IF  EXISTS DOCUMENTTABLE """
+        cursor.execute(query)
+        query = """DROP TABLE IF  EXISTS IMAGETABLE """
+        cursor.execute(query)
+        query = """DROP TABLE IF  EXISTS EVENTTABLE """
+        cursor.execute(query)
 
         cursor.execute("""DROP TABLE IF  EXISTS TIMETABLE """)
 
         cursor.execute("""DROP TABLE IF  EXISTS MMAPTABLE""") #main map table
 
     try:
-        cursor.execute("""CREATE TABLE IF NOT EXISTS EVENTTABLE (title varchar(30), date varchar(10), place varchar(40), content varchar(150), event_id serial primary key)""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS EVENTTABLE (title varchar(30), date varchar(10), place varchar(40), event_id serial primary key)""")
+  
+        cursor.execute("""CREATE TABLE IF NOT EXISTS IMAGETABLE (event_id int references eventtable ON DELETE CASCADE , image_id int not null, date varchar(10), content text, primary key (event_id,image_id))""")
+
+        cursor.execute("""CREATE TABLE IF NOT EXISTS DOCUMENTTABLE (title varchar(30), date varchar(10), content text, event_id int references eventtable ON DELETE CASCADE, document_id int not null, primary key (event_id, document_id))""")
 
         cursor.execute("""CREATE TABLE IF NOT EXISTS TIMETABLE (map_id varchar(40) primary key references TIMEMAPTABLE(mapID) on delete cascade, decade int not null,year int not null,share_date date not null,content_type varchar(40),content_header  varchar(40))""")
 
