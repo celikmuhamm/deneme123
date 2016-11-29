@@ -6,7 +6,7 @@
         <div id="page-content-wrapper">
 
         <div class="btn-group" role="group" aria-label="Operations">
-		  <button type="button" class="btn btn-secondary"><a href = "/maps/edit">Add</a></button>
+		  <button type="button" class="btn btn-secondary"><a href = "/maps/add">Add</a></button>
 		  <button type="button" class="btn btn-secondary">Update</button>
 		  <button type="button" class="btn btn-secondary">Delete</button>
 		</div>
@@ -350,13 +350,36 @@
 
                             </script>
 
-
                 </div>
             </div>
+      {% if locations %}
+      <form role="form" action="" method="post" name="locations"
+            class="form-horizontal">
+        <ul class="list-unstyled">
+          {% for location_id, location in locations %}
+          <li>
+            <input type="checkbox" name="location_ids" value="{{ location_id }}" />
+            <a href="{{ url_for('site.locations_page', location_id=location_id) }}">
+              {{ location.lat }}
+
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+
+        <button type="submit" name="delete"
+                class="btn btn-primary">Delete</button>
+      </form>
+      {% endif %}
+      
         </div>
         <!-- /#page-content-wrapper -->
 
         <script async defer
         	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPFcX163CB627zweFiwTMConzA-Qp6kr8&callback=initMap">
    		</script>
+
+
+
+
 {% endblock %}
