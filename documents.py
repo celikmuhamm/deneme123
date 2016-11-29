@@ -7,10 +7,10 @@ from event import Event, Document
 from user import setUserToDb
 from user import getUserFromDb
 from user import search
-add = Blueprint('add', __name__)
+add_doc = Blueprint('add_doc', __name__)
 
 
-@add.route('/events/documents/add', methods=['GET', 'POST'])
+@add_doc.route('/events/documents/add', methods=['GET', 'POST'])
 def add_new_document_page():
     if request.method == 'GET':
         form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
@@ -27,7 +27,7 @@ def add_new_document_page():
         documents = current_app.store_documents.get_documents(id_temp)
         return render_template('documents.html', documents=documents)
     
-@add.route('/events/documents/delete', methods=['GET', 'POST'])
+@add_doc.route('/events/documents/delete', methods=['GET', 'POST'])
 def delete_document():
     if request.method == 'POST':
         document_id_list = request.form.getlist('document_id_list')
@@ -50,7 +50,7 @@ def delete_document():
 
    
     
-@add.route('/events/documents/update/<int:event_id>/<int:document_id>', methods=['GET', 'POST'])
+@add_doc.route('/events/documents/update/<int:event_id>/<int:document_id>', methods=['GET', 'POST'])
 def update_documents_page(document_id, event_id):
     if request.method == 'GET':
         document = current_app.store_documents.get_document(document_id, event_id)
