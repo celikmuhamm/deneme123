@@ -13,12 +13,12 @@ def init_db():
 
         """cursor.execute(DROP TABLE IF  EXISTS USERTABLE )"""
 
-        query = """DROP TABLE IF  EXISTS DOCUMENTTABLE """
-        cursor.execute(query)
-        query = """DROP TABLE IF  EXISTS IMAGETABLE """
-        cursor.execute(query)
-        query = """DROP TABLE IF  EXISTS EVENTTABLE """
-        cursor.execute(query)
+#        query = """DROP TABLE IF  EXISTS DOCUMENTTABLE """
+#        cursor.execute(query)
+#        query = """DROP TABLE IF  EXISTS IMAGETABLE """
+#        cursor.execute(query)
+#        query = """DROP TABLE IF  EXISTS EVENTTABLE """
+#        cursor.execute(query)
 
         cursor.execute("""DROP TABLE IF  EXISTS TIMETABLE """)
 
