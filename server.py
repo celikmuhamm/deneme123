@@ -14,9 +14,13 @@ from messageOperations import messages
 from relation import FriendStore
 from message import MessageStore
 from documents import add
+from images import image
+from events import event
 from flask import redirect
 from event import Event
 from store import Store
+from store_images import Store_Image
+from store_documents import Store_Document
 from user import User
 from user import UserList
 from initialize_database import init_db
@@ -41,9 +45,13 @@ def create_app():
     app.register_blueprint(register)
     app.register_blueprint(adminTable)
     app.register_blueprint(add)
+    app.register_blueprint(image)
+    app.register_blueprint(event)
+    app.store = Store()
+    app.store_images = Store_Image()
+    app.store_documents = Store_Document()
     app.register_blueprint(friends)
     app.register_blueprint(messages)
-    app.store = Store()
     app.time = Timesql()
     app.init_db = init_db()
 #    app.store.add_event(Event('World War II', date='15/12/1942', place='Turkey',content= 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
