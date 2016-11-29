@@ -7,6 +7,7 @@ from timeModel import Time
 from user import setUserToDb
 from user import getUserFromDb
 from user import search
+
 add = Blueprint('add', __name__)
 
 
@@ -46,7 +47,7 @@ def delete_timeinfo():
 
 
 
-@add.route('/timeline/update/<charvar:map_id>', methods=['GET', 'POST'])
+'''@add.route('/timeline/update/<charvar:map_id>', methods=['GET', 'POST'])
 def update_time_info(event_id):
     if request.method == 'GET':
         time = current_app.timesql.get_time(event_id)
@@ -66,5 +67,4 @@ def update_time_info(event_id):
         form = { 'decade': '', 'year': '', 'share_date':'', 'content_type':'', 'content_header':''}
         return render_template('index.html', timeline=timeline, form = form)
 
-
-
+'''
