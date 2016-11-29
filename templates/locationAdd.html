@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block title %}Add Location{% endblock %}
+{% block content %}
+      <div class="page-header">
+        <h1>Add Location</h1>
+      </div>
+
+      <form role="form" action="/maps/add" method="post" name="movie_edit"
+            class="form-horizontal">
+        <div class="form-group">
+          <label for="long" class="control-label col-sm-2">Long.:</label>
+          <div class="col-sm-10">
+            <input type="text" name="long" required autofocus />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lat" class="control-label col-sm-2">Lat.:</label>
+          <div class="col-sm-10">
+            <input type="text" name="lat" required autofocus />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="year" class="control-label col-sm-2">Year:</label>
+          <div class="col-sm-10">
+            <input type="number" name="year" size="4"
+                   min="{{ min_year }}" max="{{ max_year }}" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="photo" class="control-label col-sm-2">Photo link:</label>
+          <div class="col-sm-10">
+            <input type="text" name="photo" autofocus />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="video" class="control-label col-sm-2">Video link:</label>
+          <div class="col-sm-10">
+            <input type="text" name="video" autofocus />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="document" class="control-label col-sm-2">Document link:</label>
+          <div class="col-sm-10">
+            <input type="text" name="lat" autofocus />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" name="save"
+                    class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </form>
+{% endblock %}
