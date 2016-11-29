@@ -46,8 +46,6 @@ def images_page():
                     image_array = images
                 else:
                     image_array += images
-            else:
-                counter += 1
         
     return render_template('images_slide.html', images=image_array)
 
