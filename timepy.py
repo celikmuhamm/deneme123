@@ -59,7 +59,7 @@ def update_time_info(event_id):
         share_date_temp = request.form['share_date']
         content_type_temp = request.form['content_type']
         content_header_temp = request.form['content_header']
-        timeinfo_temp = Event( decade=decade_temp, year=year_temp,share_date= share_date_temp,content_type= content_type_temp,content_header= content_header_temp)
+        timeinfo_temp = Time( decade=decade_temp, year=year_temp,share_date= share_date_temp,content_type= content_type_temp,content_header= content_header_temp)
         current_app.timesql.update_timeinfo(timeinfo_temp,map_id)
         current_app.timesql.add_timeinfo(timeinfo_temp)
         timeline = current_app.timesql.get_timeinfo()
