@@ -34,24 +34,22 @@ def documents_page():
 
 @site.route('/events/images')
 def images_page():
-    counter = 0
     events_array = current_app.store.get_events()
     image_array = None
-    for events in events_array:
-        event_id = events.event_id
-        image_series = current_app.store_images.get_images(event_id)
-        images = [(image_series)]
-        if image_series:
-            if(event_id == 1):
-                image_array = images
+    if events_array:
+        for events in events_array:
+            event_id = events.event_id
+            image_series = current_app.store_images.get_images(event_id)
+            images = [(image_series)]
+            if image_series:
+                if(event_id == 1):
+                    image_array = images
+                else:
+                    image_array += images
             else:
-                image_array += images
-        else:
-            counter += 1
-    total_count = current_app.store.get_total_events()
-    count=total_count[0]-counter
-    
-    return render_template('images_slide.html', count=count, images=image_array)
+                counter += 1
+        
+    return render_template('images_slide.html', images=image_array)
 
 @site.route('/events/images/images_add')
 def images_add_page():
