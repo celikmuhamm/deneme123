@@ -66,15 +66,8 @@ def images_all_page(event_id):
 def sign_up():
     return render_template('signUp.html')
 
-@site.route('/maps')
-def map_page():
-    return render_template('map.html')
 
 @site.route('/timeline')
 def timeline_page():
     return render_template('index.html')
-
-@site.route('/maps/edit')
-def edit_location():
-    return render_template('locationEdit.html')
 
