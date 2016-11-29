@@ -29,7 +29,7 @@
 {% for image in images_inner %}  
   {% if image.image_id == 1 %} 
   <div class="item active">
-    <img src="{{ image.content }}" class="img-responsive">
+    <img src="{{ image.content }}" class="img-responsive center-block">
       <div class="container">
         <div class="carousel-caption">
           <h1>{{image.date}}</h1>
@@ -40,7 +40,7 @@
   {% endif %}
   {% if image.image_id != 1 %}
   <div class="item">
-    <img src="{{ image.content }}" class="img-responsive">
+    <img src="{{ image.content }}" class="img-responsive center-block">
       <div class="container">
         <div class="carousel-caption">
           <h1>{{image.date}}</h1>
