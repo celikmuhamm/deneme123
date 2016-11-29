@@ -13,7 +13,7 @@ from friendOperations import friends
 from messageOperations import messages
 from relation import FriendStore
 from message import MessageStore
-from documents import add
+from documents import add_doc
 from images import image
 from events import event
 from flask import redirect
@@ -45,6 +45,7 @@ def create_app():
     app.register_blueprint(register)
     app.register_blueprint(adminTable)
     app.register_blueprint(add)
+    app.register_blueprint(add_doc)
     app.register_blueprint(image)
     app.register_blueprint(event)
     app.store = Store()
