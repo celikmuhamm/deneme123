@@ -10,6 +10,7 @@ import psycopg2 as dbapi2
 from sql_connection_for_events import get_connection_for_events
 from event import Event
 
+
 class Store:
     def __init__(self):
         self.events = {}
@@ -22,15 +23,11 @@ class Store:
         dsn = get_connection_for_events();
         with dbapi2.connect(dsn) as connection:
             cursor = connection.cursor()
-            title = event.title
-            date = event.date
-            place = event.place
-            content = event.content
-            query = """INSERT INTO EVENTTABLE (title,date,place,content) VALUES (%s, %s, %s, %s)"""
+            query = """INSERT INTO EVENTTABLE (title,date,place) VALUES (%s, %s, %s)"""
         try: 
-            cursor.execute(query, (event.title, event.date, event.place, event.content))
-            connection.commit()
+            cursor.execute(query, (event.title, event.date, event.place))
             self.last_key = cursor.lastrowid
+            connection.commit()
         except connection.Error as error:
             print(error)
         connection.close()
@@ -51,22 +48,22 @@ class Store:
         dsn = get_connection_for_events();
         with dbapi2.connect(dsn) as connection:
             cursor = connection.cursor()
-            query = """ SELECT title,date,place,content,event_id FROM EVENTTABLE WHERE event_id= %s;"""
+            query = """ SELECT * FROM EVENTTABLE WHERE event_id= %s;"""
         try:
             cursor.execute(query,(event_id,))
             fetched_data = cursor.fetchone()
-            connection.commit()
             if fetched_data is None:
                 status = 'There is no event '
                 connection.close()
                 return None
             else:        
                 title = fetched_data[0]
-                content = fetched_data[1]
-                date = fetched_data[2]
-                place = fetched_data[3]
-                event_id = fetched_data[4]
-                event = Event(title, content, date, place)
+                date = fetched_data[1]
+                place = fetched_data[2]
+                event_id = fetched_data[3]
+                event = [(Event(title, event_id, date, place))]
+            connection.commit()
+            
         except connection.Error as error:
             print(error)
         connection.close()
@@ -77,28 +74,50 @@ class Store:
         dsn = get_connection_for_events();
         with dbapi2.connect(dsn) as connection:
             cursor = connection.cursor()
-            query = """ SELECT title,date,place,content,event_id FROM EVENTTABLE ORDER BY event_id;"""
+            query = """ SELECT * FROM EVENTTABLE ORDER BY event_id;"""
         try:
             cursor.execute(query)
             fetched_data = cursor.fetchone()
-            connection.commit()
             if fetched_data is None:
                 status = 'There is no event '
                 connection.close()
                 return None
             title = fetched_data[0]
-            content = fetched_data[1]
-            date = fetched_data[2]
-            place = fetched_data[3]
-            event_id = fetched_data[4]
-            events = [(event_id,(Event(title, content, date, place)))]
-            for title, content, date, place, event_id in cursor: 
-                events = [(event_id,(Event(title, content, date, place)))]
-                
+            date = fetched_data[1]
+            place = fetched_data[2]
+            event_id = fetched_data[3]
+            events = [(Event(title, event_id, date, place))]
+            for row in cursor: 
+                title,date,place,event_id = row
+                events_row = [(Event(title, event_id, date, place))]
+                events += events_row     
+            connection.commit()
+                           
         except connection.Error as error:
             print(error)
         connection.close()
         return events
+    
+    def get_total_events(self):
+        dsn = get_connection_for_events();
+        with dbapi2.connect(dsn) as connection:
+            cursor = connection.cursor()
+            query = """ SELECT COUNT(*) FROM EVENTTABLE;"""
+        try:
+            cursor.execute(query)
+            fetched_data = cursor.fetchone()
+            if fetched_data is None:
+                status = 'There is no event '
+                connection.close()
+                return None
+            total_count = fetched_data
+            connection.commit()
+                
+        except connection.Error as error:
+            print(error)
+        connection.close()
+        return total_count
+        
         
     def update_event(self, event, event_id):
         dsn = get_connection_for_events();
@@ -107,6 +126,19 @@ class Store:
             query = """UPDATE EVENTTABLE SET title = %s,date = %s, place = %s, content = %s WHERE event_id = %s"""
         try:
             cursor.execute(query,(event.title, event.date, event.place,event.content, event_id,))
+            connection.commit()
+        except connection.Error as error:
+            print(error)
+        connection.close()
+        
+    def update_event_id(self, event_id, new_id):
+        event = current_app.store.get_event(event_id)
+        dsn = get_connection_for_events();
+        with dbapi2.connect(dsn) as connection:
+            cursor = connection.cursor()
+            query = """UPDATE EVENTTABLE SET event_id = %s WHERE event_id = %s """
+        try:
+            cursor.execute(query,(int(new_id), event_id,))
             connection.commit()
         except connection.Error as error:
             print(error)
