@@ -20,7 +20,7 @@
          			  <h3>{{ document.title }}</h3>
 			          <p class="text-left"> {{ document.content }} </p>
 			          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a>        
-						<a class="btn btn-primary" href="{{ url_for('add.update_documents_page', document_id= document.document_id, event_id = document.event_id) }}" role="button"  style="float: right">Update &raquo;</a>
+						<a class="btn btn-primary" href="{{ url_for('add_doc.update_documents_page', document_id= document.document_id, event_id = document.event_id) }}" role="button"  style="float: right">Update &raquo;</a>
 	    			   </p>   <p> Delete   <input type="checkbox" name="document_id_list" value="{{ document.document_id }}"  /> </p>
 			        </blockquote>
 			          <h1>  </h1>
