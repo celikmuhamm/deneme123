@@ -22,6 +22,7 @@
 </ul>
 
 {% endblock %} {% block content %}
+        <div id="map"> style="width: 100%"</div>
 <div class="row centered-form">
 	<div class="centered modal fade" id="squareSigninModal" tabindex="-1"
 		role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -58,7 +59,9 @@
 	</div>
 </div>
  <script>src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9fvYCoVIga4fQ-mHNtf4dv4jHbCjCJKw"></script>
-                 <div id="map"></div>
+                
+         
+                 
 <div class="container">
 
 	<div class="col-md-8 col-lg-offset-2">
@@ -167,7 +170,8 @@
 
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 3,
-          center: {lat: 40, lng: 30}
+          center: {lat: 40.024, lng: 30.887},
+            styles: [{"featureType":"administrative","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":"50"},{"visibility":"simplified"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"lightness":"30"}]},{"featureType":"road.local","elementType":"all","stylers":[{"lightness":"40"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]},{"featureType":"water","elementType":"labels","stylers":[{"lightness":-25},{"saturation":-100}]}]
         });
 
         // Create an array of alphabetical characters used to label the markers.
@@ -176,12 +180,10 @@
         // Note: The code uses the JavaScript Array.prototype.map() method to
         // create an array of markers based on a given "locations" array.
         // The map() method here has nothing to do with the Google Maps API.
-      
         var markers = locations.map(function(location, i) {
           return new google.maps.Marker({
             position: location,
             label: locations[i % locations.length].label
-            
           });
           
         });

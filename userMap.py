@@ -15,9 +15,16 @@ class UserLocationStore:
         self.lastLocationId = 0
 
     def addLocation(self, userLocation):
+        newUserLocation = UserLocation()
         self.lastLocationId+= 1
+        newUserLocation.locationId = self.lastLocationId
         userLocation.locationId=self.lastLocationId
-        self.myLocations.append(userLocation)
+        newUserLocation.userName = userLocation.userName
+        newUserLocation.mapInfo = userLocation.mapInfo
+        newUserLocation.locationLabel =  userLocation.locationLabel
+        newUserLocation.lat =  userLocation.lat
+        newUserLocation.lng =  userLocation.lng
+        self.myLocations.append(newUserLocation)
         try:
             userMapConnection = getConnection();
             userMapCursor = userMapConnection.cursor()

@@ -42,9 +42,18 @@ class FriendStore:
                     myFriend.friendUsername = friends[2]
                     self.myFriends.append(myFriend)
                     self.lastFriendId += 1
+            friendCursor.execute("""SELECT * FROM FRIENDSTABLE WHERE firends_id=%s;""",(username,))
+            friendTableConnection.commit()
+            dbData = friendCursor.fetchall()
+            if dbData != None:
+                for friends in dbData:
 
+                    myFriend = Friend()
+                    myFriend.userName = friends[2]
+                    myFriend.friendUsername = friends[1]
+                    self.myFriends.append(myFriend)
+                    self.lastFriendId += 1       
             friendCursor.close()
-           
             friendTableConnection.close()
         except friendTableConnection.Error as Error:
             print(Error)
@@ -54,7 +63,7 @@ class FriendStore:
          try:
             friendTableConnection = getConnection();
             friendCursor = friendTableConnection.cursor()
-            friendCursor.execute("""UPDATE FRIENDSTABLE SET firends_id=%s WHERE userMap_id=%d;""",(newInfo,friendId))
+            friendCursor.execute("""UPDATE FRIENDSTABLE SET firends_id=%s WHERE friendRecordId=%d;""",(newInfo,friendId))
             friendTableConnection.commit()
          except friendTableConnection.Error as Error:
             print(Error)
@@ -65,7 +74,7 @@ class FriendStore:
          try:
             friendTableConnection = getConnection();
             friendCursor = friendTableConnection.cursor()
-            friendCursor.execute("""DELETE FROM FRIENDSTABLE WHERE userMap_id=%d;""",(friendId,))
+            friendCursor.execute("""DELETE FROM FRIENDSTABLE WHERE friendRecordId=%d;""",(friendId,))
             friendTableConnection.commit()
          except friendTableConnection.Error as Error:
             print(Error)
