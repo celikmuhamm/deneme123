@@ -54,19 +54,21 @@
 			</div><!-- /.modal -->
 	</div>
 	<br>
-	
+	      
+{% if events %}	
 <form role="form" action="/events/delete_event"  method="post" name="event_del" class="form-horizontal">
 	        
 <div class="list-group">
-{% if events %}
+
 {% for event in events %}
   <a href="{{ url_for('site.documents_all_page', event_id=event.event_id) }}" class="list-group-item">{{event.title}} - {{event.date}} - {{event.place}} </a>    Delete event <input type="checkbox" name="event_id_list" value="{{ event.event_id }}" style="float: left"  /> 
   <br> <br>
 {% endfor %}
-{% endif %}
+
 </div>        
 <button type="submit" name="delete" class="btn btn-primary">Delete</button>
-</form>        	    		
+</form>
+{% endif %}
 	  </div>
 {% endblock %}
 
