@@ -46,7 +46,7 @@ def delete_timeinfo():
 
 
 
-@add.route('/events/documents/update/<int:event_id>', methods=['GET', 'POST'])
+@add.route('/timeline/update/<charvar:map_id>', methods=['GET', 'POST'])
 def update_time_info(event_id):
     if request.method == 'GET':
         time = current_app.timesql.get_time(event_id)
