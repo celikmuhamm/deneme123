@@ -45,7 +45,10 @@ def images_page():
                 if(event_id == 1):
                     image_array = images
                 else:
-                    image_array += images
+                    if image_array is None:
+                        image_array = images
+                    else:
+                        image_array += images
         
     return render_template('images_slide.html', images=image_array)
 
