@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Documents{% endblock %}
+{% block content %}
+      <div class="page-header">
+        <h1><b>Images All</b></h1>
+		{% if images %}
+		<div class="gallery">
+			{% if event_id %}
+			<form role="form" action=/events/images/delete  method="post" name="images" class="form-horizontal">
+				<div class="row">
+					{% for image in images %}
+					<div class="col-lg-3">
+						<a href="{{ image.content }}"  data-title="My first caption" data-lightbox="Vacation">
+							<img src="{{ image.content }}"  width="200px" class="img-rounded">
+						</a> <p> Delete image   <input type="checkbox" name="image_id_list" value="{{ image.image_id }}"  /> </p>
+					</div>
+					{% endfor %}
+				</div>
+				<br>
+				<button type="submit" name="delete" value= "{{ event_id }}" class="btn btn-primary">Delete</button>
+			</form>
+			{% endif %}
+		</div>
+		{% endif %}
+		
+<br>
+<br>
+
+    
+</div>
+	  
+{% endblock %}
+
