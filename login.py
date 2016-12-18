@@ -26,8 +26,8 @@ def login_page():
             for locations in current_app.usermap.myLocations:
                newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
                markerLocations.append(newLocation)
-                
-            return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+
+            return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = username)
         else:
             flash(status)
             return render_template('home.html')
@@ -37,7 +37,7 @@ def login_page():
         for locations in current_app.usermap.myLocations:
                newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
                markerLocations.append(newLocation)
-                
+
         return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
 
      else:
@@ -75,12 +75,45 @@ def register_page():
 def log_out():
           session.pop('user', None)
           return render_template('home.html')
-      
+
 @register.route('/adminPage')
 def adminPage():
           if current_app.user.username == 'deepMapAdmin':
               current_app.userList.getUsers()
               return render_template('adminPage.html',user_name = current_app.user.username,userTable = current_app.userList.userTable)
-          else: 
+          else:
               return render_template('home.html')
-      
+@register.route('/profilePage')
+def profile():
+          if session.get('user')!=None:
+              return render_template('profile.html',user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+          else:
+              return render_template('home.html')
+
+@register.route('/friendsMap',methods=['POST','GET'])
+def friend_page():
+
+     if request.method == 'POST':
+        username = request.form['friendsName']
+        friendsMap = UserLocationStore()
+        friendsMap.getLocations(username)
+        markerLocations = []
+        for locations in friendsMap.myLocations:
+               newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
+               markerLocations.append(newLocation)
+
+        return render_template('user_page.html',markerLocations = markerLocations, userMap = friendsMap.myLocations, user_name = current_app.user.username)
+
+     if session.get('user')!=None:
+        markerLocations = []
+        for locations in current_app.usermap.myLocations:
+               newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
+               markerLocations.append(newLocation)
+
+        return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+
+     else:
+        flash('Please sign in or register for DeepMap')
+        return render_template('home.html')
+
+

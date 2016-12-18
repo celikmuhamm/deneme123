@@ -1,0 +1,110 @@
+{% extends "layout2.html" %} {% block title %}ProfilePage{% endblock %}
+{%block navbarsignup %}
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<ul class="nav navbar-nav navbar-right">
+
+	<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown" role="button" aria-haspopup="true"
+		aria-expanded="false"><span class="glyphicon glyphicon-user"></span>
+			{{ user_name }}</a>
+		<ul class="dropdown-menu">
+			<li><a href="#"><span class="glyphicon glyphicon-user">
+						Profile</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-envelope">
+						Inbox</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-cog">
+						Settings</a></li>
+			<li role="separator" class="divider"></li>
+			<li><a href="{{url_for('register.log_out')}}"><span class="glyphicon glyphicon-log-out" >
+						Log-out</a></li>
+		</ul></li>
+
+</ul>
+
+{% endblock %} {% block content %}
+
+<div class="container">
+
+	<div class="col-md-8 col-lg-offset-2">
+<hr></hr>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1>User Profile</h1>
+			</div>
+			<div class="panel-body">
+
+				<div class="box box-info">
+
+					<div class="box-body">
+						<div class="col-sm-6">
+							<div align="center">
+								<img alt="User Pic"
+									src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+									id="profile-image1" class="img-circle img-responsive"> <input
+									id="profile-image-upload" class="hidden" type="file">
+								<div style="color: #999;">click here to change profile
+									image</div>
+								<!--Upload Image Js And Css-->
+
+							</div>
+
+							<br>
+
+							<!-- /input-group -->
+						</div>
+						<div class="col-sm-6">
+							<h1 style="color: #00b1b1;">{{ first_name }} {{last_name}}</h1>
+							</span> <span><h4>{{user_name}}</h4></span>
+						</div>
+						<div class="clearfix"></div>
+						<hr style="margin: 5px 0 5px 0;">
+
+
+						<div class="col-sm-5 col-xs-6 tital "><h4>First Name:</h4></div>
+						<div class="col-sm-7 col-xs-6 "><h4>{{ first_name }}</h4></div>
+						<div class="clearfix"></div>
+						<div class="bot-border"></div>
+
+
+						<div class="col-sm-5 col-xs-6 tital "><h4>Last Name:</h4></div>
+						<div class="col-sm-7"><span><h4>{{last_name}}</h4></span></div>
+						<div class="clearfix"></div>
+						<div class="bot-border"></div>
+
+						<div class="col-sm-5 col-xs-6 tital "><h4>Date Of Joining:</h4></div>
+						<div class="col-sm-7"><h4>21 March 2050</h4></div>
+
+						<div class="clearfix"></div>
+						<div class="bot-border"></div>
+
+						<div class="col-sm-5 col-xs-6 tital "><h4>E-mail</h4></div>
+						<div class="col-sm-7"><h4>{{e_mail}}</h4></div>
+
+						<div class="clearfix"></div>
+						<div class="bot-border"></div>
+
+						<div class="col-sm-5 col-xs-6 tital "><h4>Country:</h4></div>
+						<div class="col-sm-7"><h4>Unknown</h4></div>
+
+						<div class="clearfix"></div>
+						<div class="bot-border"></div>
+
+						<div class="col-sm-5 col-xs-6 tital "><h4>Gender:</h4></div>
+						<div class="col-sm-7"><h4>Unknown</h4></div>
+
+						<div class="clearfix"></div>
+						<div class="bot-border"></div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /.box -->
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}

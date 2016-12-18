@@ -22,7 +22,14 @@
 <title>DeepMap - {% block title %}{% endblock %}</title>
 </head>
 <body>
-
+{% for message in get_flashed_messages() %}
+    <div class="flash">
+    	<div class="alert alert-warning">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>DeepMap says: {{message}} </strong>
+</div>
+    </div>
+    {% endfor %}
 <script type=text/javascript>
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
@@ -98,7 +105,7 @@
 				<li><a href={{url_for('myMap.getLocations')}}><span
 						class="fa-stack fa-lg pull-left"><i
 							class="fa-map fa-stack-1x"></i></span> My Map</a>
-				<li><a href="#"><span class="fa-stack fa-lg pull-left"><i
+				<li><a href="{{url_for('notifications.getNotifications')}}"><span class="fa-stack fa-lg pull-left"><i
 							class="fa fa-bell-o fa-stack-1x "></i></span>Notifications</a></li>
 				<li><a href={{url_for('friends.getFriends')}}> <span class="fa-stack fa-lg pull-left"><i
 							class="fa fa-users fa-stack-1x "></i></span>Friends
