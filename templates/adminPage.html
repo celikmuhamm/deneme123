@@ -22,7 +22,11 @@
 </ul>
 
 {% endblock %}{% block content %}
+
+
 {% if userTable %}
+
+<hr></hr>
 						<table id="glorious-table" class="table table-bordered table-responsive">
 
                 <thead>
@@ -46,6 +50,8 @@
 <!--                 {% endfor %} -->
                 </tbody>
                 {% endif %}
+							
+	<hr></hr>
                <div> <a data-toggle="modal" class="btn btn-info"
 		data-target="#deleteModal" role="button">Delete</a>
 		 <a data-toggle="modal" class="btn btn-info"
