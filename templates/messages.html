@@ -24,86 +24,123 @@
 {% endblock %} {% block content %}
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='css/messages.css') }}" />
-<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-<div class="container bootstrap snippet">
-
-  <div class="header">
-    <h3 class="text-muted prj-name">
-        <span class="fa fa-users fa-2x principal-title"></span>
-        Your Messages
-    </h3>
-  </div>
-
-
-  <div class="jumbotron list-content">
-    <ul class="list-group">
-      <li href="#" class="list-group-item title">
-            </li>
-        	 {% if messages %}
-
-                {% for message in messages %} 
-                <li href="#" class="list-group-item text-left">
-       <div class="row">
-		<div class="col-sm-6">
-            <div id="tb-testimonial" class="testimonial testimonial-default-filled">
-                <div class="testimonial-section">
-                	{{message.content}}
-            	</div>
-                <div class="testimonial-desc">
-                    <img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" />
-                    <div class="testimonial-writer">
-                    	<div class="testimonial-writer-name">{{message.friendUsername}}</div>
-                    	<div class="testimonial-writer-designation">Front End Developer</div>
-                    	<a href="#" class="testimonial-writer-company">Touch Base Inc</a>
+{% if messages %}
+{%for conversation in messages%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="accordion">
+                    <div class="btn-group ">
+                        <a type="button" class="btn btn-primary btn-block btn-lg" data-toggle="collapse" data-parent="#accordion" href='#{{conversation.sender}}'>
+                            <span class="glyphicon glyphicon-comment"> Chat with {{conversation.sender}}</span>
+                        </a>
                     </div>
                 </div>
-            </div>   
-		</div>
-		</li>
-                 {% endfor %} 
-                
-                {% endif %}
+                <div class="panel-collapse collapse" id='{{conversation.sender}}'>
+                <div class="panel-body">
+                    <ul class="chat">
+           {%for message in conversation.messages%}
 
-     
-    
-  </div>
-      <div> <a data-toggle="modal" class="btn btn-info"
-		data-target="#sendMessage" role="button">Send a Message</a>
-		</div>
-                <div class="row centered-form">
-	<div class="centered modal fade" id="sendMessage" tabindex="-1"
-		role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
-					</button>
-					<h3 class="modal-title" id="lineModalLabel">Delete</h3>
-				</div>
-				<div class="modal-body">
+                    	{%if user_name == message.receiver %}
+                        <li class="left clearfix"><span class="chat-img pull-left">
+                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">{{message.sender}}</strong> <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time"></span></small>
+                                </div>
+                                 <form method="post" action = '/deleteMessage'>
+						            <input type=hidden value="{{message.messageId}}"name="message_to_delete"></input>
+						            <button type= "submit"class="btn btn-danger  btn-xs glyphicon glyphicon-trash"  title="Delete"></button>
+						           </form>
+                                <p>
+                                    {{message.content}}
+                                </p>
+                            </div>
+                        </li>
+                        {%endif%}
+                        {%if message.sender == user_name %}
+                        <li class="right clearfix"><span class="chat-img pull-right">
+                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span></small>
+                                    <strong class="pull-right primary-font">{{message.sender}}</strong>
+                                </div>
+                                <form method="post" action = '/deleteMessage'>
+						            <input type=hidden value="{{message.messageId}}"name="message_to_delete"></input>
+						            <button type= "submit"class="btn btn-danger  btn-xs glyphicon glyphicon-trash"  title="Delete"></button>
+						           </form>
+                                <p>
+                                   {{message.content}}
+                                </p>
 
-					<!-- content goes here -->
-					<form role="form" method="post" action='/sendMessage' data-toggle="validator" >
-						<div class="form-group">
-							<label for="username">Username of friend</label> 
-							<input required class="form-control" name="user_name"
-								placeholder="Username" requiered></div>
-							<div class="form-group">
-							<label for="content">Message</label>
-							 <textarea required class="form-control" id="content" name="content"
-								placeholder="message" > </textarea>
-						</div>
-						<button type="submit" class="btn btn-primary">Send</button>
-					</form>
+                            </div>
+                        </li>
+                         {% endif %}
 
-				</div>
 
-			</div>
-		</div>
-	</div>
-              
-           
+           {%endfor%}
+                </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                    <form method = "post" action = '/sendMessage'>
+                        <input id="btn-input" name="content" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <input type=hidden value="{{ conversation.sender}}"name="user_name"></input>
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                                Send</button>
+                        </span>
+                     </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="accordion">
+                    <div class="btn-group ">
+                        <a type="button" class="btn btn-primary btn-block btn-lg" data-toggle="collapse" data-parent="#accordion" href="#collapseO2">
+                            <span class="glyphicon glyphicon-comment"> Sart new conversation</span>
+                        </a>
+                    </div>
+                </div>
+
+            <div class="panel-collapse collapse" id="collapseO2">
+                <div class="panel-body">
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                    <form method = "post" action = '/sendMessage'>
+                   	 <label for="btn-input2">Username</label>
+
+                   	   <input id="btn-input2" type="text" class="form-control input-sm" name="user_name" placeholder="Enter the username of your friend"></input>
+
+                        <input id="btn-input" name="content" type="text" class="form-control input-sm" placeholder="Type your message here..."></input>
+
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                                Send</button>
+                        </span>
+                     </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
-                       

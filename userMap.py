@@ -55,13 +55,13 @@ class UserLocationStore:
                     userLocations.lat = locations[4]
                     userLocations.lng = locations[5]
                     userLocations.locationId=locations[0]
-                    
+
                     self.myLocations.append(userLocations)
                     location = self.myLocations[0]
                     self.lastLocationId += 1
 
             userMapCursor.close()
-           
+
             userMapConnection.close()
         except userMapConnection.Error as userMapError:
             print(userMapError)
@@ -88,8 +88,8 @@ class UserLocationStore:
             userMapConnection.close()
          except userMapConnection.Error as userMapError:
             print(userMapError)
-            
-        
+
+
 
     def deleteLocation(self, locationId, newAddress):
          try:

@@ -8,7 +8,7 @@ from user import getUserFromDb
 from user import search
 from user import UserList
 from userMap import UserLocationStore
-
+from comment import Comment
 register = Blueprint('register', __name__)
 
 @register.route('/userPage',methods=['POST','GET'])
@@ -27,7 +27,8 @@ def login_page():
                newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
                markerLocations.append(newLocation)
 
-            return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = username)
+            current_app.commentStore.getComments(username)
+            return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = username)
         else:
             flash(status)
             return render_template('home.html')
@@ -37,8 +38,8 @@ def login_page():
         for locations in current_app.usermap.myLocations:
                newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
                markerLocations.append(newLocation)
-
-        return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+        current_app.commentStore.getComments(username)
+        return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
 
      else:
         flash('Please sign in or register for DeepMap')
@@ -63,7 +64,7 @@ def register_page():
              current_app.user.email = email
              setUserToDb( current_app.user)
              markerLocations = []
-             return render_template('user_page.html',markerLocations = markerLocations,user_name = username,first_name = firstname,last_name = lastname,e_mail = email)
+             return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations,user_name = username,first_name = firstname,last_name = lastname,e_mail = email)
          else:
              flash('The username: '+username +' already using by another user' )
              return render_template('home.html')
@@ -101,19 +102,52 @@ def friend_page():
         for locations in friendsMap.myLocations:
                newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
                markerLocations.append(newLocation)
-
-        return render_template('user_page.html',markerLocations = markerLocations, userMap = friendsMap.myLocations, user_name = current_app.user.username)
-
-     if session.get('user')!=None:
-        markerLocations = []
-        for locations in current_app.usermap.myLocations:
-               newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
-               markerLocations.append(newLocation)
-
-        return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
-
+        current_app.commentStore.getComments(username)
+        return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations, userMap = friendsMap.myLocations, user_name = username)
      else:
         flash('Please sign in or register for DeepMap')
         return render_template('home.html')
 
+@register.route('/makeComment',methods=['POST','GET'])
+def makeComment():
+     if request.method == 'POST':
+        friendsUsername = request.form['friendsName']
+        content = request.form['content']
+        username = current_app.user.username
+        userId = current_app.user.userId
+        comment = Comment()
+        comment.userName = username
+        comment.userId = userId
+        comment.friendUsername = friendsUsername
+        comment.content = content
+        current_app.commentStore.addComment(comment)
+        friendsMap = UserLocationStore()
+        friendsMap.getLocations(friendsUsername)
+        markerLocations = []
+        for locations in friendsMap.myLocations:
+               newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
+               markerLocations.append(newLocation)
+        current_app.commentStore.getComments(friendsUsername)
+        return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations, userMap = friendsMap.myLocations, user_name = friendsUsername)
+     else:
+        flash('Please sign in or register for DeepMap')
+        return render_template('home.html')
+@register.route('/deleteComment',methods=['POST','GET'])
+def deleteComment():
 
+     if request.method == 'POST':
+        commentId = request.form['comment_to_delete']
+        current_app.commentStore.deleteComment(commentId)
+        username=current_app.user.username
+        friendsMap = UserLocationStore()
+        friendsMap.getLocations(username)
+        markerLocations = []
+        for locations in friendsMap.myLocations:
+               newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
+               markerLocations.append(newLocation)
+        current_app.commentStore.getComments(username)
+        return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations, userMap = friendsMap.myLocations, user_name = current_app.user.username)
+
+     else:
+        flash('Please sign in or register for DeepMap')
+        return render_template('home.html')

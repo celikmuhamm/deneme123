@@ -1,29 +1,35 @@
 from sqlconnection import getConnection
 
 class Message:
-    def __init__(self, userName=None , friendUsername=None, content=None):
-        self.userName = userName
-        self.friendUsername = friendUsername
+    def __init__(self, receiver=None , sender=None, content=None):
+        self.receiver = receiver
+        self.sender = sender
         self.content = content
+        self.status = None
         self.messageId = 0
+class Conversation:
+    def __init__(self, sender=None):
+        self.sender = sender
+        self.lastMessageId = 0
+        self.messages = []
+    def addMessages(self, message):
+         self.lastMessageId+= 1
+         self.messages.append(message)
 class MessageStore:
     def __init__(self):
-        self.myMessages = []
-        self.lastMessageId = 0
+        self.conversations = []
+        self.lastConversationId = 0
 
-    def addMessages(self, message):
-        self.lastMessageId+= 1
-        Message.messageId=self.lastMessageId
+    def sendMessage(self, message):
         newMessage = Message()
-        newMessage.messageId=self.lastMessageId
-        newMessage.userName = message.userName
-        newMessage.friendUsername = message.friendUsername
+        newMessage.sender = message.sender
+        newMessage.receiver = message.receiver
         newMessage.content = message.content
-        self.myMessages.append(newMessage)
+        newMessage.status = 'normal'
         try:
             messageTableConnection = getConnection();
             messageCursor = messageTableConnection.cursor()
-            messageCursor.execute("""INSERT INTO MESSAGETABLE (messageId,user_id,firends_id,content) VALUES(%s,%s,%s,%s);""", (message.messageId,message.userName,message.friendUsername,message.content))
+            messageCursor.execute("""INSERT INTO MESSAGETABLE (user_id,firends_id,content,status) VALUES(%s,%s,%s,%s);""", (message.sender,message.receiver,message.content,message.status))
             messageTableConnection.commit()
             messageCursor.close()
             messageTableConnection.close()
@@ -33,46 +39,63 @@ class MessageStore:
 
     def getMessages(self,username):
         try:
-            self.lastMessageId = 0
-            self.myMessages = []
+            self.lastConversationId = 0
+            self.conversations = []
             messageTableConnection = getConnection();
             messageCursor = messageTableConnection.cursor()
-            messageCursor.execute("""SELECT * FROM MESSAGETABLE WHERE user_id=%s;""",(username,))
+            messageCursor.execute("""SELECT * FROM MESSAGETABLE WHERE firends_id=%s OR user_id=%s;""",(username,username))
             messageTableConnection.commit()
             dbData = messageCursor.fetchall()
             if dbData != None:
                 for messages in dbData:
-
                     myMessage = Message()
-                    myMessage.userName = messages[1]
-                    myMessage.friendUsername = messages[2]
+                    myMessage.messageId = messages[0]
+                    myMessage.sender = messages[1]
+                    myMessage.receiver = messages[2]
                     myMessage.content = messages[3]
-                    self.myMessages.append(myMessage)
-                    self.lastMessageId += 1
+                    myMessage.status = messages[4]
+                    found = 'false'
+                    if myMessage.status == 'deleted':
+                        if username == myMessage.receiver:
+                            continue
+                    if self.conversations != None:
+                        i = 0
+                        while i < self.lastConversationId:
+                            if self.conversations[i].sender == messages[1] or self.conversations[i].sender == messages[2]:
+                                self.conversations[i].addMessages(myMessage)
+                                found = 'true'
+                                self.conversations[i].lastMessageId += 1
+                            i += 1
+                    if found == 'false':
+                         newConversation = Conversation()
+                         newConversation.addMessages(myMessage)
+                         if myMessage.sender == username:
+                            newConversation.sender =  myMessage.receiver
+                         else:
+                            newConversation.sender =  myMessage.sender
+                         self.conversations.append(newConversation)
+                         self.lastConversationId += 1
+
 
             messageCursor.close()
-           
+
             messageTableConnection.close()
         except messageTableConnection.Error as Error:
             print(Error)
         return self
 
-    def updateMessages(self,messageId,newContent):
+    def updateAndDeleteMessages(self,messageId,username):
          try:
             messageTableConnection = getConnection();
             messageCursor = messageTableConnection.cursor()
-            messageCursor.execute("""UPDATE MESSAGETABLE SET content=%s WHERE messageId=%d;""",(newContent,messageId))
-            messageTableConnection.commit()
-         except messageTableConnection.Error as Error:
-            print(Error)
+            messageCursor.execute("""SELECT * FROM MESSAGETABLE WHERE messageId=%s;""",(messageId,))
+            dbData = messageCursor.fetchone()
+            if dbData[1] == username:
+                messageCursor.execute("""DELETE FROM MESSAGETABLE WHERE messageId=%s;""",(messageId,))
+            else:
+                newContent = 'deleted'
+                messageCursor.execute("""UPDATE MESSAGETABLE SET status=%s WHERE messageId=%s;""",(newContent,messageId))
 
-         messageTableConnection.close()
-
-    def deleteMessage(self, messageId):
-         try:
-            messageTableConnection = getConnection();
-            messageCursor = messageTableConnection.cursor()
-            messageCursor.execute("""DELETE FROM MESSAGETABLE WHERE messageId=%d;""",(messageId,))
             messageTableConnection.commit()
          except messageTableConnection.Error as Error:
             print(Error)

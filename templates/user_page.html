@@ -144,10 +144,39 @@
     <script type=text/javascript>
 
 </script>
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='css/friends.css') }}" />
+<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+{% if comments %}
+{%for comment in comments%}
+  <li href="#" class="list-group-item text-left">
+        <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
+       	<label class="name">
+           {{comment.userName}}
+           {{comment.content}}
+        </label>
+
+        <label class="pull-right">
+
+        <form method="post" action = '/deleteComment'>
+            <input type=hidden value="{{ comment.commentId}}"name="comment_to_delete"></input>
+            <button type= "submit"class="btn btn-danger  btn-xs glyphicon glyphicon-trash"  title="Delete"></button>
+            </form>
+            </label>
+        </li>
 
 
-
-
+{%endfor%}
+{%endif%}
+<form method="post" action = '/makeComment'>
+<div class="form-group">
+  <label for="comment">Comment:</label>
+  <input type=hidden value="{{user_name}}"name="friendsName"></input>
+  <textarea class="form-control" rows="5" name="content"></textarea>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+</form>
 {% endblock %}
 
 

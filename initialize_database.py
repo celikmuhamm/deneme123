@@ -48,7 +48,8 @@ def init_db():
     try:
          conn = getConnection()
          userCursor = conn.cursor()
-         userCursor.execute("""CREATE TABLE IF NOT EXISTS USERTABLE (username varchar(20) UNIQUE,password varchar(20), email varchar(40),name varchar(20),surname varchar(20))""")
+         userCursor.execute("""DROP TABLE IF EXISTS USERTABLE CASCADE""")
+         userCursor.execute("""CREATE TABLE IF NOT EXISTS USERTABLE (userId SERIAL PRIMARY KEY,username varchar(20) UNIQUE,password varchar(20), email varchar(40),name varchar(20),surname varchar(20))""")
          conn.commit()
 
     except conn.Error as userError:
@@ -84,6 +85,7 @@ def init_db():
 
          socialTableconn = getConnection()
          socialTablecursor = socialTableconn.cursor()
+         socialTablecursor.execute("""DROP TABLE IF EXISTS FRIENDSTABLE """)
          socialTablecursor.execute("""CREATE TABLE IF NOT EXISTS FRIENDSTABLE (friendRecordId SERIAL PRIMARY KEY ,user_id varchar(20) references USERTABLE(username) on delete cascade,firends_id varchar(20) references USERTABLE(username) on delete cascade,status varchar(20))""")
          socialTableconn.commit()
 
@@ -95,6 +97,7 @@ def init_db():
     try:
         requestTableconn = getConnection()
         requestTableCursor = requestTableconn.cursor()
+        requestTableCursor.execute("""DROP TABLE IF EXISTS REQUESTTABLE """)
         requestTableCursor.execute("""CREATE TABLE IF NOT EXISTS REQUESTTABLE (requestId SERIAL PRIMARY KEY, requester varchar(20) references USERTABLE(username) on delete cascade, requested varchar(20) references USERTABLE(username) on delete cascade)""")
         requestTableconn.commit()
     except requestTableconn.Error as requestError:
@@ -105,10 +108,24 @@ def init_db():
 
          messageTableConn = getConnection()
          messageTableCursor = messageTableConn.cursor()
-         messageTableCursor.execute("""CREATE TABLE IF NOT EXISTS MESSAGETABLE (messageId INT,user_id varchar(20) references USERTABLE(username) on delete cascade,firends_id varchar(20) references USERTABLE(username) on delete cascade,content varchar(300))""")
+         messageTableCursor.execute("""DROP TABLE IF EXISTS MESSAGETABLE """)
+         messageTableCursor.execute("""CREATE TABLE IF NOT EXISTS MESSAGETABLE (messageId SERIAL PRIMARY KEY,user_id varchar(20) references USERTABLE(username) on delete cascade,firends_id varchar(20) references USERTABLE(username) on delete cascade,content varchar(300),status varchar(20))""")
          messageTableConn.commit()
 
     except messageTableConn.Error as messageError:
         print(messageError)
 
     messageTableConn.close()
+
+    try:
+
+         commentTableConn = getConnection()
+         commentTableCursor = commentTableConn.cursor()
+         commentTableCursor.execute("""DROP TABLE IF EXISTS COMMENTTABLE """)
+         commentTableCursor.execute("""CREATE TABLE IF NOT EXISTS COMMENTTABLE (commentId SERIAL PRIMARY KEY,userId INT references USERTABLE(userId) on delete cascade,user_name varchar(20) references USERTABLE(username) on delete cascade,friendUsername varchar(20) references USERTABLE(username) on delete cascade,content varchar(300))""")
+         commentTableConn.commit()
+
+    except commentTableConn.Error as messageError:
+        print(messageError)
+
+    commentTableConn.close()

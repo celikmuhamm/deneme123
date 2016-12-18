@@ -35,6 +35,7 @@ from savelocation import SaveLocation
 from mmapsettings import new
 from request import RequestStore
 from notifications import notifications
+from comment import CommentStore
 def create_app():
     app = Flask(__name__)
     app.user = User()
@@ -53,6 +54,7 @@ def create_app():
     app.register_blueprint(event)
     app.register_blueprint(notifications)
     app.store = Store()
+    app.commentStore = CommentStore()
     app.requestStore = RequestStore()
     app.store_images = Store_Image()
     app.store_documents = Store_Document()
