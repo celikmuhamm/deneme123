@@ -124,3 +124,14 @@ def init_db():
         print(messageError)
 
     commentTableConn.close()
+    try:
+
+         notificationTableConn = getConnection()
+         notificationTableCursor = notificationTableConn.cursor()
+         notificationTableCursor.execute("""CREATE TABLE IF NOT EXISTS NOTIFICATIONTABLE (notificationId SERIAL PRIMARY KEY,user_name varchar(20) references USERTABLE(username) on delete cascade,friendUsername varchar(20) references USERTABLE(username) on delete cascade,messageId INT references MESSAGETABLE(messageId),commentId INT references COMMENTTABLE(commentId))""")
+         notificationTableConn.commit()
+
+    except notificationTableConn.Error as messageError:
+        print(messageError)
+
+    notificationTableConn.close()

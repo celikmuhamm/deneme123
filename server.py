@@ -34,8 +34,9 @@ from location import Location
 from savelocation import SaveLocation
 from mmapsettings import new
 from request import RequestStore
-from notifications import notifications
+from notificationOperations import notifications
 from comment import CommentStore
+from notification import NotificationStore
 def create_app():
     app = Flask(__name__)
     app.user = User()
@@ -64,6 +65,7 @@ def create_app():
     app.time = Timesql()
     app.init_db = init_db()
     app.savelocation = SaveLocation()
+    app.notificationStore = NotificationStore()
 #    app.store.add_event(Event('World War II', date='15/12/1942', place='Turkey',content= 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
 #    app.store.add_event(Event('Train Accident', date='01/02/1985', place='California', content = 'Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit'))
     return app

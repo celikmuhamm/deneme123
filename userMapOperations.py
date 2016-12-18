@@ -21,21 +21,23 @@ def getLocations():
             current_app.userlocation.mapInfo = info
             current_app.userlocation.locationLabel = label
             current_app.usermap.addLocation(current_app.userlocation)
-        
+
         markerLocations = []
         for locations in current_app.usermap.myLocations:
             newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
             markerLocations.append(newLocation)
-           
-            
-        return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+
+        current_app.commentStore.getComments(current_app.user.username)
+        return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
     else:
         if session.get('user')!=None:
             markerLocations = []
             for locations in current_app.usermap.myLocations:
                 newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
                 markerLocations.append(newLocation)
-            return render_template('user_page.html',markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
+
+            current_app.commentStore.getComments(current_app.user.username)
+            return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations, userMap = current_app.usermap.myLocations, user_name = current_app.user.username,first_name=current_app.user.name,last_name = current_app.user.surname,e_mail=current_app.user.email)
         else:
             flash('Please sign in or register for DeepMap')
             return render_template('home.html')

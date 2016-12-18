@@ -6,6 +6,7 @@ from userMap import UserLocation
 from relation import Friend
 from message import Message
 from user import search
+from notification import Notification
 messages = Blueprint('messages', __name__)
 
 @messages.route('/messagePage',methods=['POST','GET'])
@@ -36,7 +37,15 @@ def sendMessages():
                     if relationStatus == 'alreadyExists':
                         current_app.messageStore.sendMessage(message)
                         current_app.messageStore.getMessages(current_app.user.username)
-                        xxx = current_app.messageStore.conversations[0].messages
+                        notification = Notification()
+                        for conversation in current_app.messageStore.conversations:
+                            if conversation.sender == userName:
+                                for messages in conversation.messages:
+                                    if  message.sender == currentName and  message.receiver == userName:
+                                        notification.requester = currentName
+                                        notification.requested = userName
+                                        notification.typeId = messages.messageId
+                        current_app.notificationStore.sendMessageNotification(notification)
                     else:
                         flash('you are not friends with '+userName)
                 else:

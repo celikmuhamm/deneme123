@@ -9,6 +9,7 @@ from user import search
 from user import UserList
 from userMap import UserLocationStore
 from comment import Comment
+from notification import Notification
 register = Blueprint('register', __name__)
 
 @register.route('/userPage',methods=['POST','GET'])
@@ -62,9 +63,10 @@ def register_page():
              current_app.user.name = firstname
              current_app.user.surname = lastname
              current_app.user.email = email
+             session['user'] = username
              setUserToDb( current_app.user)
              markerLocations = []
-             return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations,user_name = username,first_name = firstname,last_name = lastname,e_mail = email)
+             return render_template('user_page.html',markerLocations = markerLocations,user_name = username,first_name = firstname,last_name = lastname,e_mail = email)
          else:
              flash('The username: '+username +' already using by another user' )
              return render_template('home.html')
@@ -128,6 +130,13 @@ def makeComment():
                newLocation = {'lat':locations.lat,'lng':locations.lng,'info':locations.mapInfo,'label':locations.locationLabel}
                markerLocations.append(newLocation)
         current_app.commentStore.getComments(friendsUsername)
+        notification = Notification()
+        for comment in current_app.commentStore.comments:
+            if  comment.userName == username and  comment.friendUsername == friendsUsername:
+                notification.requester = username
+                notification.requested = friendsUsername
+                notification.typeId = comment.commentId
+        current_app.notificationStore.sendCommentNotification(notification)
         return render_template('user_page.html',comments = current_app.commentStore.comments,markerLocations = markerLocations, userMap = friendsMap.myLocations, user_name = friendsUsername)
      else:
         flash('Please sign in or register for DeepMap')

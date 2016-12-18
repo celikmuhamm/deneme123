@@ -47,7 +47,7 @@
                      <li href="#" class="list-group-item text-left">
         <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
         <label class="name">
-           {{request.requester}}
+           {{request.requester}}  added you as a friend
         </label>
         <label class="pull-right">
         <form method="post" action = '/addFriend'>
@@ -57,15 +57,43 @@
             <input type=hidden value="{{request.requestId}}" name="request_to_delete"></input>
             <button type= "submit" class="btn btn-danger  btn-xs glyphicon glyphicon-trash"  title="Delete"></button>
             </form>
-            <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" href="#" title="Send message"></a>
         </label>
         <div class="break"></div>
       </li>
                  {% endfor %}
 
                 {% endif %}
-
-
+			{%if notifications%}
+				{%for notification in notifications%}
+			{%if notification.type == 'comment'%}
+	<li href="#" class="list-group-item text-left">
+        <label class="name">
+           {{notification.requester}} made a comment about your Map
+        </label>
+        <label class="pull-right">
+           <form method="post" action= '/deleteNotification'>
+            <input type=hidden value="{{notification.notificationId}}" name="notification_to_delete"></input>
+            <button type= "submit" class="btn btn-danger  btn-xs glyphicon glyphicon-trash"  title="Delete"></button>
+            </form>
+        </label>
+        <div class="break"></div>
+      </li>
+       {% endif %}
+       {%if notification.type == 'message'%}
+      <li href="#" class="list-group-item text-left">
+        <label class="name">
+           {{notification.requester}} sended you a message
+        </label>
+        <label class="pull-right">
+           <form method="post" action= '/deleteNotification'>
+            <input type=hidden value="{{notification.notificationId}}" name="notification_to_delete"></input>
+            <button type= "submit" class="btn btn-danger  btn-xs glyphicon glyphicon-trash"  title="Delete"></button>
+            </form>
+        </label>
+        <div class="break"></div>
+      </li> {% endif %}
+				{% endfor %}
+			 {% endif %}
     </ul>
 
   </div>
