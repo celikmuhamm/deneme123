@@ -84,7 +84,7 @@ def init_db():
 
          socialTableconn = getConnection()
          socialTablecursor = socialTableconn.cursor()
-
+         socialTablecursor.execute("""DROP TABLE FRIENDSTABLE """)
          socialTablecursor.execute("""CREATE TABLE IF NOT EXISTS FRIENDSTABLE (friendRecordId SERIAL PRIMARY KEY ,user_id varchar(20) references USERTABLE(username) on delete cascade,firends_id varchar(20) references USERTABLE(username) on delete cascade,status varchar(20))""")
          socialTableconn.commit()
 
@@ -96,7 +96,6 @@ def init_db():
     try:
         requestTableconn = getConnection()
         requestTableCursor = requestTableconn.cursor()
-        requestTableCursor.execute("""DROP TABLE REQUESTTABLE""")
         requestTableCursor.execute("""CREATE TABLE IF NOT EXISTS REQUESTTABLE (requestId SERIAL PRIMARY KEY, requester varchar(20) references USERTABLE(username) on delete cascade, requested varchar(20) references USERTABLE(username) on delete cascade)""")
         requestTableconn.commit()
     except requestTableconn.Error as requestError:
