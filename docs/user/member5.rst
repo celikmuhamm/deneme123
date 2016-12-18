@@ -13,7 +13,6 @@ bu arayüzdeki forma bilgilerini girerek kendi hesabına ve profil bilgilerine u
       Sign-in penceresi
       
     
-      
 Kayıtlı olmayan kullanıcı giriş yaparsa veya yanlış parola girilirse ekranın tepesinde aşağıdaki şekilde olduğu gibi bir uyarı çıkar.     
    .. figure:: oyku_pictures/wrongsignin.png
       :align: center
@@ -35,7 +34,7 @@ Sidebar
 ^^^^^^^   
 Kullanıcı hesabına giriş yaptıktan sonra sol tarafta bulunan sidebar ile arkadaş bağıntılarının bulunduğu Friends sayfasına, bildirimlerin olduğu notifications sayfasına kendi haritasının bulunduğu myMap sayfasına ve mesajların olduğu sayfaya ulaşabilmekte. Sidebar kapanıp açılabilmekte. Aşaqıda sidebarın kapalı ve açık ekran  görüntüleri bulunmakta.
 
-  .. figure:: oyku_pictures/sidebar.png
+  .. figure:: oyku_pictures/sidebar3.png
        :scale: 25 %
        :alt: sidebar front page
        
@@ -127,16 +126,19 @@ Kullanıcı, friends sayfasında en altta bulunan "Find New Friends" butonuna t�
         
         Friend Notification
 
- Diğer arkadaş işlemleri
--------------------------- 
+
+Diğer arkadaş işlemleri
+--------------------------
+
+
 İstek gönderilen kişi, isteği kabul ettikten sonra kullanıcı arkadaş olarak eklenmiş olur. Bu durumda Kullanıcı bu arkadaşı silebilir, bloklayabilir veya yakın arkadaş olarak ekleyebilir. Arkadaş kutucuğunda üç buton bulunmaktadır. Bunlardan yeşil olanına basılırsa o kişi her iki kullanıcıda da yakın arkadaş olarak eklenmiş olur. Sarı buton bloklama butonudur ve kullanıcı bu butona basarsa karşısındaki kullanıcının, kendi profilini görmesini engellemiş olur. Aynı butona tekrar basılarak bloklama özlliği kaldırılabilir. Kırmızı buton ise silme butonudur. Kullanıcı bu butona basarsa arkadaşlık tamamen her iki kullanıcıda da silinmiş olur.
-   .. figure:: oyku_pictures/addedFriend.png
+
+  .. figure:: oyku_pictures/addedfriend.png
         :scale: 25 %
         :alt: addedfriend front page    
         
-        Friend Notification
-      
+        Friend Notification      
         
-
+Ayrıca kullanıcı adının yazılı olduğu butona basılarak o kullanıcının kendi profilindeki haritasına gidilebilir.
        
        
