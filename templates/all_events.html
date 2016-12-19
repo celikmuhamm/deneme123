@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}All Events{% endblock %}
+{% block content %}
+      <div class="page-header">
+        <h1><b>All Events</b>      </h1>      
+{% if events %}	
+<form role="form" action="/events/delete_event"  method="post" name="event_del" class="form-horizontal">
+	        
+<div class="list-group">
+<table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Place</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+ 	<tbody>
+{% for event in events %}
+      <tr>
+        <td>{{event.title}}</td>
+        <td>{{event.date}}</td>
+        <td>{{event.place}}</td> 
+        <td><input type="checkbox" name="event_id_list" value="{{ event.event_id }}" style="float: center"  ></td>
+      </tr>  
+{% endfor %}
+  	</tbody>
+ </table>
+</div>        
+<button type="submit" name="delete" class="btn btn-primary">Delete</button>
+</form>
+{% endif %}
+
+	<br> 
+
+<a href="/events" class="btn btn-info" role="button" style="float: right"> Back to the Events</a> 
+<br>
+<br>
+<br>
+</div>
+{% endblock %}
+
