@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-from flask import current_app
+from flask import Blueprint, render_template, flash
+from flask import current_app, session
 
 from datetime import datetime
 
@@ -16,21 +16,47 @@ def home_page():
 
 @site.route('/events')
 def events_page():
-    return render_template('events.html')
+#    if session.get('user')!=None:
+         return render_template('events.html')
+#    else:
+#        flash('Please sign in or register for DeepMap')
+#        return render_template('home.html')
+
 
 @site.route('/events/documents_all/<int:event_id>', methods=['GET', 'POST'])
 def documents_all_page(event_id):
     documents_array = current_app.store_documents.get_documents(event_id)
     form = {'inputTitle': '', 'inputDate': '', 'event_number': '', 'comment':''}
- 
-    return render_template('documents.html', event_id=event_id, documents=documents_array, form=form)
+    if documents_array != None:
+        return render_template('documents.html', event_id=event_id, documents=documents_array, form=form)
+    else:
+        flash('Please first add a document')
+        form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
+        events_array = current_app.store.get_events()
+        if events_array!=None:
+            return render_template('events_list.html', events=events_array, form=form)
+        else:
+            flash('Please first add an event')
+            return render_template('events.html')
 
 @site.route('/events/events_list', methods=['GET', 'POST'])
 def documents_page():
     form = {'inputTitle': '', 'inputDate': '', 'inputPlace': '', 'comment':''}
     events_array = current_app.store.get_events()
+    if events_array!=None:
+        return render_template('events_list.html', events=events_array, form=form)
+    else:
+        flash('Please first add an event')
+        return render_template('events.html')
     
-    return render_template('events_list.html', events=events_array, form=form)
+@site.route('/events/all_events', methods=['GET', 'POST'])
+def all_events_page():
+    events_array = current_app.store.get_events()
+    if events_array!=None:
+        return render_template('all_events.html', events=events_array)
+    else:
+        flash('Please first add an event')
+        return render_template('events.html')
 
 @site.route('/events/images')
 def images_page():
@@ -49,8 +75,11 @@ def images_page():
                         image_array = images
                     else:
                         image_array += images
-        
-    return render_template('images_slide.html', images=image_array)
+        return render_template('images_slide.html', images=image_array)
+    else:
+        flash('Please first add an event')
+        return render_template('events.html')
+
 
 @site.route('/events/images/images_add')
 def images_add_page():
