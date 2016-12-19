@@ -9,7 +9,7 @@ import re
 import psycopg2 as dbapi2
 from sql_connection_for_events import get_connection_for_events
 from event import Event
-
+from flask import current_app
 
 class Store:
     def __init__(self):
@@ -20,11 +20,14 @@ class Store:
         self.last_event_id += 1
         self.events[self.last_event_id] = event
         event._id = self.last_event_id
+#        username = current_app.user.username;
         dsn = get_connection_for_events();
         with dbapi2.connect(dsn) as connection:
             cursor = connection.cursor()
+#            query = """INSERT INTO EVENTTABLE (title,date,place,username) VALUES (%s, %s, %s, %s)"""
             query = """INSERT INTO EVENTTABLE (title,date,place) VALUES (%s, %s, %s)"""
         try: 
+#            cursor.execute(query, (event.title, event.date, event.place, username))
             cursor.execute(query, (event.title, event.date, event.place))
             self.last_key = cursor.lastrowid
             connection.commit()
