@@ -13,13 +13,18 @@ event = Blueprint('event', __name__)
 @event.route('/events/add_event', methods=['GET', 'POST'])
 def add_new_event():
     if request.method == 'POST':
-        title_temp = request.form['inputTitle']
-        date_temp = request.form['inputDate']
-        place_temp = request.form['inputPlace']
-        event_id = 1
-        event_temp = Event(title = title_temp, date=date_temp, place=place_temp,event_id = event_id)
-        current_app.store.add_event(event_temp)
-        return render_template('events.html')
+#        if session.get('user')!=None:
+            title_temp = request.form['inputTitle']
+            date_temp = request.form['inputDate']
+            place_temp = request.form['inputPlace']
+            event_id = 1
+            event_temp = Event(title = title_temp, date=date_temp, place=place_temp,event_id = event_id)
+            current_app.store.add_event(event_temp)
+            return render_template('events.html')
+#        else:
+#            flash('Please sign in or register for DeepMap')
+#            return render_template('home.html')
+
     
 @event.route('/events/delete_event', methods=['GET', 'POST'])
 def delete_event():
@@ -33,7 +38,7 @@ def delete_event():
         if events:
             for event in events:
                 if event.event_id != count:
-                    current_app.store.update_event_id(int(event_id),count)
+                    current_app.store.update_event_id(event.event_id,count)
                 count += 1
         
         return render_template('events.html')
