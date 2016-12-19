@@ -9,6 +9,7 @@ import re
 import psycopg2 as dbapi2
 from sql_connection_for_events import get_connection_for_events
 from event import Document
+from flask import current_app
 
 class Store_Document:
     def __init__(self):
@@ -27,8 +28,11 @@ class Store_Document:
             event_id = document.event_id
             document_id = document.document_id
             content = document.content
+#            username = current_app.user.username;
+#            query = """INSERT INTO DOCUMENTTABLE (title,date,content,event_id,document_id,username) VALUES (%s, %s, %s, %s, %s, %s)"""
             query = """INSERT INTO DOCUMENTTABLE (title,date,content,event_id,document_id) VALUES (%s, %s, %s, %s, %s)"""
         try: 
+#            cursor.execute(query, (title,date,content,event_id,document_id, username))
             cursor.execute(query, (title,date,content,event_id,document_id))
             self.last_key = cursor.lastrowid
             connection.commit()
@@ -143,9 +147,9 @@ class Store_Document:
         dsn = get_connection_for_events();
         with dbapi2.connect(dsn) as connection:
             cursor = connection.cursor()
-            query = """UPDATE DOCUMENTTABLE SET document_id = %s WHERE event_id = %s """
+            query = """UPDATE DOCUMENTTABLE SET document_id = %s WHERE event_id = %s AND document_id = %s """
         try:
-            cursor.execute(query,(int(document_id), int(event_id),))
+            cursor.execute(query,(new_id, event_id, document_id))
             connection.commit()
         except connection.Error as error:
             print(error)
