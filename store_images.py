@@ -29,8 +29,11 @@ class Store_Image:
             event_id = image.event_id
             content = image.content
             image_id = image.image_id
+#            username = current_app.user.username;
+#            query = """INSERT INTO IMAGETABLE (date,event_id,content,image_id,username) VALUES (%s, %s, %s, %s, %s)"""
             query = """INSERT INTO IMAGETABLE (date,event_id,content,image_id) VALUES (%s, %s, %s, %s)"""
         try: 
+#            cursor.execute(query, (date, event_id, content, image_id, username))
             cursor.execute(query, (date, event_id, content, image_id))
             self.last_key = cursor.lastrowid
             connection.commit()
