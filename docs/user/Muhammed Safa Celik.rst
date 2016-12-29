@@ -150,7 +150,26 @@ Her kullanıcı hem kendi haritasına hem de arkadaş olduğu kullanıcıların 
       yorumlar 
 
 
+--------------------------
 
+Ekstralar
+^^^^^^^^^^^^^^^
+
+Kullanıcı haritalarına cluster servisi eklendi. kullanıcıların sürekli marker eklemesiyle markerların uzaklaştığında birbirlerini engellemelerinin önüne geçmek için google cluster servisi kullanıldı. Bu sayede haritada markerlar kendilerine en yakın olan markerlarla birleşip cluster'ları oluşturup kaç marker barındırıyorlarsa o rakamı üstlerinde barındırarak haritaya rahat okunma ve rahat analiz edilme yeteneklerini kazandırmış oldular.
+
+   .. figure:: safa_resimler/closeLocs.png
+      :align: center
+      :scale: 50 %
+      :alt: new chat window
+    
+      yakından görünüm 
       
-      
+   .. figure:: safa_resimler/locArray.png
+      :align: center
+      :scale: 50 %
+      :alt: new chat window
+    
+      uzaktan görünüm       
+
+
 
