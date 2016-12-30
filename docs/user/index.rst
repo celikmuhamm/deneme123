@@ -17,7 +17,7 @@ Siteye girildiğinde aşağıdaki görselde bulunan sayfa ile karşılaşılır.
 .. toctree::
 
    EmineOykuBozkir
-   Muhammed Safa celik
+   Muhammed Safa Celik
    cicekn_user
   
    
