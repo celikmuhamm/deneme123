@@ -1,5 +1,5 @@
-Parts Implemented by Muhammed Safa Celik
-================================
+Muhammed Safa Celik Tarafından Gerçeklenen Bölümler
+==================================================
 Database ve SQL connection Kurulumu
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Bluemix'te elephantsql hizmeti alındı ve projeye eklendi. Manifest.yml dosyasına services ve elephantsql servisi eklendi.
