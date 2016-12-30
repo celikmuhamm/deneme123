@@ -1,5 +1,5 @@
-Parts Implemented by Emine Öykü Bozkır
-================================
+Emine Öykü Bozkır Tarafından Gerçeklenen Bölümler
+===============================================
   
 Kullanıcının Sisteme Girişi için Arayüz (Sign-In)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
