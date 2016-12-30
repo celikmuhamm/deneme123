@@ -44,7 +44,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'DeepMap'
+project = 'DeepMapItucsdb1624'
 copyright = '2016, itucsdb1624'
 
 # The version info for the project you're documenting, acts as replacement for
