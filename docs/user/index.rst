@@ -1,22 +1,23 @@
-User Guide
-==========
+Kullanım Kılavuzu
+===============
 
-**explain how your application works from the user perspective, use
-screenshots whereever appropriate**
+Deep map sitesinde kayıtlı kullanıcı ve misafir bulunmaktadır. Kullanıcı girişi ve kayıt, kullanıcı haritaları oluşturmak, arkadaşlık ilişkileri kurmak, yorum yapmak, mesajlaşmak ve benzeri işlemler için gereklidir. Bunun dışında, giriş yapılmadan da sitenin event, Map vb bölümlerine ulaşılabilmektedir. 
 
-**to add a picture, use the following example**::
+Siteye girildiğinde aşağıdaki görselde bulunan sayfa ile karşılaşılır. Bu sayfada üstteki navigasyon barından map, event, timeline sekmelerine kayıt olunmadan girilebilmektedir. Sağ taraftaki sign-in ve sign-up butonları aracılığı ile de kulanıcı sisteme giriş yapabilir vey kaydolabilir.
 
-   .. figure:: picture.png
+  
+   .. figure:: ortak_resim/view.png
+      :align: center
       :scale: 50 %
-      :alt: map to buried treasure
 
-      This is the caption of the figure (a simple paragraph).
+     
+      Giriş Sayfası
+
 
 .. toctree::
 
-   member1
-   member2
-   member3
-   member4
-   member5
+   EmineOykuBozkir
+   Muhammed Safa celik
+   cicekn_user
+  
    
