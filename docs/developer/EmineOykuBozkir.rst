@@ -1,4 +1,4 @@
-Parts Implemented by Emine Öykü Bozkır
+Emine Öykü Bozkır Tarafından Gerçeklenen Bölümler
 =====================================
 
 User Map Tablosu ve Operasyonları
