@@ -1,6 +1,6 @@
-Parts Implemented by Muhammed Safa Çelik
-=======================================
------------------------------------------------
+Muhammed Safa Çelik Tarafından Gerçeklenen Bölümler
+=================================================
+
 
 Kullanıcının Sisteme Kaydı (Sign-Up)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -33,7 +33,7 @@ Açılan pencereye istenilen bilgiler girilerek sisteme kaydolunur. Bu bilgiler 
 
 Bütün bilgiler doğru ve tam bir şekilde girildikten sonra veritabanına kaydedilmektedir. Burada dikkat edilmesi gereken nokta username kısmının, yani kullanıcı adının kullanılmıyor olmasıdır. Eğer başka bir kullanıcı tarafından kullanılan bir username girilirse veritabanına kayıt olunamaz. Bu durumda giriş sayfasına yönlendirilir ve bu sayfada bu kullanıcı adının zaten var olduğuna dair bir hata mesajı gösterilir.
 
-----------------------------------------------------
+
 
 Admin Sayfası
 ^^^^^^^^^^^^^
@@ -125,6 +125,7 @@ Bu kutulardan chat with "deepMapAdmin" yazılı olana basılırsa bu kullanıcı
       deepMapAdmin ile yapılan sohbet
     
 Karşılıklı mesajlaşma bu şekilde görülmektedir:
+
    .. figure:: safa_resimler/conversationscreen.png
       :align: center
       :scale: 50 %
